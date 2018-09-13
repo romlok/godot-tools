@@ -39,6 +39,9 @@ func set_target(val):
 	
 	target_path = get_path_to(val)
 	target = val
+	# Active tool scripts have all their vars wiped when saved,
+	# but _ready doesn't get called. So we fetch parent again here.
+	parent = get_parent()
 	
 func set_physics_sync(val):
 	val = bool(val)
@@ -54,7 +57,6 @@ func set_physics_sync(val):
 func _ready():
 	set_physics_sync(physics_sync)
 	set_target_path(target_path)
-	parent = get_parent()
 	
 
 func _process(delta):
