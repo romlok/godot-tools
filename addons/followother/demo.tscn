@@ -63,9 +63,11 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../MoveMe")
-mirror_position = true
-mirror_rotation = true
+follow_x = true
+follow_y = true
+follow_z = true
+follow_rotation = true
 interpolate_speed = 8.0
-physics_sync = true
+physics_sync = false
 
 
