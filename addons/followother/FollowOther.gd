@@ -9,6 +9,7 @@ export(NodePath) var target_path setget set_target_path
 export(bool) var mirror_position = true
 export(bool) var mirror_rotation = true
 export(float) var interpolate_speed = 0
+export(bool) var physics_sync = false setget set_physics_sync
 
 var parent
 var target setget set_target
@@ -39,17 +40,29 @@ func set_target(val):
 	target_path = get_path_to(val)
 	target = val
 	
+func set_physics_sync(val):
+	val = bool(val)
+	physics_sync = val
+	
+	if Engine.editor_hint:
+		# The editor doesn't process physics
+		val = false
+	set_physics_process(val)
+	set_process(not val)
+	
 
-func _enter_tree():
+func _ready():
+	set_physics_sync(physics_sync)
 	set_target_path(target_path)
 	parent = get_parent()
 	
-func _exit_tree():
-	target = null
-	parent = null
-	
 
 func _process(delta):
+	do_process(delta)
+func _physics_process(delta):
+	do_process(delta)
+	
+func do_process(delta):
 	if target == null or parent == null:
 		return
 	
