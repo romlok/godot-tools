@@ -22,7 +22,37 @@ subdivide_depth = 0
 
 [node name="Spatial" type="Spatial" index="0"]
 
-[node name="MoveMe" type="MeshInstance" parent="." index="0"]
+[node name="MoveMe" type="RigidBody" parent="." index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+linear_velocity = Vector3( 0, 0, 0 )
+linear_damp = -1.0
+angular_velocity = Vector3( 0, 2, 0 )
+angular_damp = -1.0
+_sections_unfolded = [ "Angular", "Transform" ]
+
+[node name="MeshInstance" type="MeshInstance" parent="MoveMe" index="0"]
 
 layers = 1
 material_override = null
@@ -39,6 +69,8 @@ material/0 = null
 _sections_unfolded = [ "Transform" ]
 
 [node name="Spatial" type="Spatial" parent="." index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial" index="0"]
 
@@ -64,12 +96,12 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../MoveMe")
+interpolate_speed = 8.0
+physics_sync = false
 follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = true
-interpolate_speed = 8.0
-physics_sync = false
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
@@ -94,7 +126,7 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../Spatial/MeshInstance")
-interpolate_speed = 1.0
+interpolate_speed = 4.0
 physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
 negative_z = true

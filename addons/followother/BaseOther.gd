@@ -1,4 +1,4 @@
-# Node which keeps its parent looking at the target node
+# Base script for nodes which alter the parent in response to a target
 tool
 extends Node
 
@@ -31,10 +31,14 @@ func set_target(val):
 	if typeof(val) == TYPE_OBJECT and val is Spatial:
 		pass
 	else:
+		target = null
 		return
 	
 	target_path = get_path_to(val)
 	target = val
+	# Listen for if the target disappears
+	target.connect("tree_exited", self, "_on_lost_target")
+	
 	# Active tool scripts have all their vars wiped when saved,
 	# but _ready doesn't get called. So we fetch parent again here.
 	parent = get_parent()
@@ -62,6 +66,14 @@ func _physics_process(delta):
 	if parent == null or target == null:
 		return
 	do_process(delta)
+	
+
+func _on_lost_target():
+	# The target we had has left the building
+	target = null
+	# Wait a bit and try to reconnect (in case of eg. "change type")
+	yield(get_tree(), "idle_frame")
+	set_target_path(target_path)
 	
 
 func do_process(delta):
