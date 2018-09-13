@@ -8,10 +8,13 @@ export(bool) var negative_z = true #
 
 func do_process(delta):
 	# Make the parent look at the target
-	var flip_z = 1 if negative_z else -1
 	var new_basis = parent.global_transform.looking_at(
-		target.global_transform.origin * flip_z, up_vector
+		target.global_transform.origin, up_vector
 	).basis
+	if not negative_z:
+		# We want to look with our +Z axis
+		new_basis = new_basis.rotated(new_basis.y, PI)
+	
 	var parent_quat = Quat(parent.global_transform.basis)
 	var target_quat = Quat(new_basis)
 	var diff = (parent_quat + -target_quat).length_squared()
