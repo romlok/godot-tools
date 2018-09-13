@@ -4,21 +4,40 @@
 tool
 extends Node
 
-# Confguration
+# Configuration
 export(NodePath) var target_path setget set_target_path
 export(bool) var mirror_position = true
 export(bool) var mirror_rotation = true
 export(float) var interpolate_speed = 0
 
 var parent
-var target
+var target setget set_target
 
 func set_target_path(val):
+	# Sets a new target NodePath
 	target_path = val
 	if target_path != null and has_node(target_path):
-		target = get_node(target_path)
+		set_target(get_node(target_path))
 	else:
 		target = null
+	
+func set_target(val):
+	# Sets or clears a new target Spatial node
+	
+	if val == null:
+		# Wipe out the stored values
+		target_path = null
+		target = null
+		return
+	
+	# Otherwise, make sure we have what we expect
+	if typeof(val) == TYPE_OBJECT and val is Spatial:
+		pass
+	else:
+		return
+	
+	target_path = get_path_to(val)
+	target = val
 	
 
 func _enter_tree():
