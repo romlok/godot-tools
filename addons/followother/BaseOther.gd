@@ -72,8 +72,10 @@ func _on_lost_target():
 	# The target we had has left the building
 	target = null
 	# Wait a bit and try to reconnect (in case of eg. "change type")
-	yield(get_tree(), "idle_frame")
-	set_target_path(target_path)
+	var tree = get_tree()
+	if tree != null:
+		yield(tree, "idle_frame")
+		set_target_path(target_path)
 	
 
 func do_process(delta):
