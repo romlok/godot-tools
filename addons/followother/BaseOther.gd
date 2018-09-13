@@ -4,6 +4,7 @@ extends Node
 
 # Configuration
 export(NodePath) var target_path setget set_target_path
+export(bool) var enabled = false setget set_enabled
 export(float) var interpolate_speed = 0
 export(bool) var physics_sync = false setget set_physics_sync
 
@@ -43,6 +44,16 @@ func set_target(val):
 	# but _ready doesn't get called. So we fetch parent again here.
 	parent = get_parent()
 	
+func set_enabled(val):
+	enabled = bool(val)
+	if enabled:
+		# Turn on what needs to be on
+		set_physics_sync(physics_sync)
+	else:
+		# Switch everything off
+		set_physics_process(false)
+		set_process(false)
+	
 func set_physics_sync(val):
 	val = bool(val)
 	physics_sync = val
@@ -55,7 +66,7 @@ func set_physics_sync(val):
 	
 
 func _ready():
-	set_physics_sync(physics_sync)
+	set_enabled(enabled)
 	set_target_path(target_path)
 	
 func _process(delta):

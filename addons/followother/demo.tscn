@@ -96,6 +96,7 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../MoveMe")
+enabled = true
 interpolate_speed = 8.0
 physics_sync = false
 follow_x = true
@@ -126,6 +127,7 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../Spatial/MeshInstance")
+enabled = true
 interpolate_speed = 4.0
 physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
