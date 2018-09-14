@@ -11,8 +11,8 @@ export(Vector2) var mouselook_scale = Vector2(PI / 360, PI / 360)
 export(float) var mouselook_hold_timeout = 0.3
 var mouselook_hold_timer
 # We expose the min/max pitches as degrees, but use rads
-export(float) var min_pitch = -90 setget set_min_pitch
-export(float) var max_pitch = 90 setget set_max_pitch
+export(float) var min_pitch = -89.9 setget set_min_pitch
+export(float) var max_pitch = 89.9 setget set_max_pitch
 var pitch_limits = [null, null]
 var last_mouse_pos = Vector2()
 var used_actions = [

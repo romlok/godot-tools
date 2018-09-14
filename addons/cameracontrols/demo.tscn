@@ -129,8 +129,8 @@ enabled = false
 mouselook = false
 mouselook_scale = Vector2( 0.00872665, 0.00872665 )
 mouselook_hold_timeout = 0.3
-min_pitch = -90
-max_pitch = 90
+min_pitch = -89.9
+max_pitch = 89.9
 consume_events = true
 
 [node name="Fulcrum" type="Spatial" parent="." index="5"]
@@ -179,9 +179,10 @@ mouselook = false
 mouselook_scale = Vector2( 0.00872665, 0.00872665 )
 mouselook_hold_timeout = 0.3
 min_pitch = 0.0
-max_pitch = 90
+max_pitch = 89.9
 consume_events = true
 mousepan = false
 pan_speed = 4
+pan_normal = Vector3( 0, 1, 0 )
 
 

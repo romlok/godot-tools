@@ -6,6 +6,7 @@ extends "FPSController.gd"
 
 export(bool) var mousepan = false setget set_mousepan
 export(float) var pan_speed = 4
+export(Vector3) var pan_normal = Vector3(0, 1, 0) setget set_pan_normal
 var pan_plane = Plane()
 var pan_direction = Vector3()
 
@@ -21,6 +22,14 @@ func set_mouselook(val):
 		return false
 	.set_mouselook(val)
 	
+func set_pan_normal(val):
+	pan_normal = val
+	if parent != null:
+		pan_plane = Plane(
+			pan_normal,
+			parent.global_transform.origin.dot(pan_normal)
+		)
+	
 
 func _init():
 	# Spinnycam has more controls
@@ -32,12 +41,7 @@ func _init():
 		"pan_mouse_drag",
 	]
 func _ready():
-	# Define the ground plane for dragging
-	var pan_normal = parent.global_transform.basis.y
-	pan_plane = Plane(
-		pan_normal,
-		parent.global_transform.origin.dot(pan_normal)
-	)
+	set_pan_normal(pan_normal)
 	
 
 func get_ground_projection(coords):
@@ -54,7 +58,6 @@ func _process(delta):
 	if pan_speed > 0 and pan_direction.length_squared():
 		# Work out the relative direction on the ground plane
 		var parent_dir = parent.transform.basis * pan_direction
-		var pan_normal = parent.global_transform.basis.y
 		var plane_dir = parent_dir.slide(pan_normal).normalized()
 		parent.global_translate(plane_dir * pan_speed * delta)
 		
