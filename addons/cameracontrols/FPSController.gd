@@ -66,12 +66,16 @@ func _unhandled_input(event):
 		set_mouselook(not mouselook)
 		if consume_events:
 			get_tree().set_input_as_handled()
-		# We allow hold-and-drag mouselook for long presses
-		mouselook_hold_timer = get_tree().create_timer(mouselook_hold_timeout)
+		if mouselook_hold_timeout > 0:
+			# We allow hold-and-drag mouselook for long presses
+			mouselook_hold_timer = get_tree().create_timer(mouselook_hold_timeout)
 		return
 	if event.is_action_released("mouselook_toggle"):
 		# We un-mouselook if the toggle had been held down long enough
-		if mouselook_hold_timer != null and mouselook_hold_timer.time_left <= 0:
+		if mouselook_hold_timeout <= 0:
+			# Hold-mouselook is disabled
+			pass
+		elif mouselook_hold_timer != null and mouselook_hold_timer.time_left <= 0:
 			if mouselook:
 				set_mouselook(false)
 			if consume_events:
