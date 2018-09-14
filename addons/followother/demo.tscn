@@ -24,7 +24,6 @@ subdivide_depth = 0
 
 [node name="MoveMe" type="RigidBody" parent="." index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -69,8 +68,6 @@ material/0 = null
 _sections_unfolded = [ "Transform" ]
 
 [node name="Spatial" type="Spatial" parent="." index="1"]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial" index="0"]
 
