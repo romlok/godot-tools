@@ -1,5 +1,5 @@
 # Controls the parent Node like it's the middle a potter's wheel
-extends "FirstPersonController.gd"
+extends "FPSController.gd"
 
 export(bool) var mousepan = false setget set_mousepan
 export(float) var pan_speed = 4
