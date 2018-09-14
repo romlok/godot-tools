@@ -1,4 +1,7 @@
 # Controls the parent Node like it's the middle a potter's wheel
+#
+# Believe it or not, this is just an extension of the FPS functionality
+#
 extends "FPSController.gd"
 
 export(bool) var mousepan = false setget set_mousepan

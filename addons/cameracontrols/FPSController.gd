@@ -5,6 +5,7 @@ signal mouselook_toggled(enabled)
 
 var parent
 
+export(bool) var enabled = true setget set_enabled
 export(bool) var mouselook = false setget set_mouselook
 export(Vector2) var mouselook_scale = Vector2(PI / 360, PI / 360)
 export(float) var mouselook_hold_timeout = 0.3
@@ -17,6 +18,10 @@ var used_actions = [
 ]
 export(bool) var consume_events = true
 
+func set_enabled(val):
+	enabled = val
+	set_process_unhandled_input(val)
+	
 func set_mouselook(val):
 	var changed = (mouselook != bool(val))
 	mouselook = bool(val)
@@ -35,6 +40,8 @@ func _ready():
 	for action in used_actions:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
+	
+	set_enabled(enabled)
 	
 func _enter_tree():
 	parent = get_parent()
