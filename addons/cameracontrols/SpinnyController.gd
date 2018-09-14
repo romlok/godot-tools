@@ -1,14 +1,10 @@
 # Controls the parent Node like it's the middle a potter's wheel
-extends "fps_camera.gd"
+extends "FirstPersonController.gd"
 
-var mousepan = false setget set_mousepan
-var pan_speed = 4
+export(bool) var mousepan = false setget set_mousepan
+export(float) var pan_speed = 4
+var pan_plane = Plane()
 var pan_direction = Vector3()
-var pan_enabled = true setget set_pan_enabled
-var move_speed = 0.2
-var distance_min = 1
-var distance_max = 10
-var ground_plane = Plane()
 
 func set_mousepan(val):
 	if mouselook:
@@ -22,72 +18,47 @@ func set_mouselook(val):
 		return false
 	.set_mouselook(val)
 	
-func set_pan_enabled(val):
-	# Set whether or not this camera can pan
-	pan_enabled = bool(val)
-	mousepan = false
-	
 
 func _init():
 	# Spinnycam has more controls
 	used_actions += [
-		"camera_pan_forward",
-		"camera_pan_back",
-		"camera_pan_left",
-		"camera_pan_right",
-		"camera_pan_drag",
-		"camera_move_toward",
-		"camera_move_away",
+		"pan_forward",
+		"pan_back",
+		"pan_left",
+		"pan_right",
+		"pan_mouse_drag",
 	]
 func _ready():
-	# Define the ground plane
-	var fulcrum_pos = fulcrum.global_transform.origin
-	var ground_normal = Vector3(0, 1, 0)
-	ground_plane = Plane(
-		ground_normal,
-		fulcrum_pos.dot(ground_normal)
+	# Define the ground plane for dragging
+	var pan_normal = parent.global_transform.basis.y
+	pan_plane = Plane(
+		pan_normal,
+		parent.global_transform.origin.dot(pan_normal)
 	)
-	# Look at the fulcrum
-	transform = transform.looking_at(fulcrum_pos, Vector3(0, 1, 0))
-	vertical_limits = [-PI / 2.1, 0]
 	
 
 func get_ground_projection(coords):
-	# Returns the ground coords of for viewport (mouse) coords
-	return ground_plane.intersects_ray(
-		project_ray_origin(coords),
-		project_ray_normal(coords)
+	# Returns the ground coords for viewport (mouse) coords
+	var camera = get_viewport().get_camera()
+	return pan_plane.intersects_ray(
+		camera.project_ray_origin(coords),
+		camera.project_ray_normal(coords)
 	)
 	
 
 func _process(delta):
-	# Move the fulcrum as needed
-	if pan_enabled and pan_direction.length_squared():
+	# Move the parent as needed
+	if pan_speed > 0 and pan_direction.length_squared():
 		# Work out the relative direction on the ground plane
-		var fulcrum_dir = fulcrum.transform.basis * pan_direction
-		var plane_dir = fulcrum_dir.slide(Vector3(0, 1, 0)).normalized()
-		fulcrum.global_translate(plane_dir * pan_speed * delta)
+		var parent_dir = parent.transform.basis * pan_direction
+		var pan_normal = parent.global_transform.basis.y
+		var plane_dir = parent_dir.slide(pan_normal).normalized()
+		parent.global_translate(plane_dir * pan_speed * delta)
 		
 	
 func _unhandled_input(event):
-	if not current:
-		# Don't respond if we're not active
-		return
-	
-	# Get all up in your face
-	if event.is_action_pressed("camera_move_toward"):
-		translation.z = max(distance_min, translation.z - move_speed)
-		if consume_events:
-			get_tree().set_input_as_handled()
-		return
-	if event.is_action_pressed("camera_move_away"):
-		translation.z = min(distance_max, translation.z + move_speed)
-		if consume_events:
-			get_tree().set_input_as_handled()
-		return
-		
 	# Handle panning of the camera by dragging the mouse
-	if pan_enabled and event.is_action("camera_pan_drag"):
+	if event.is_action("pan_mouse_drag"):
 		if event.is_pressed():
 			if get_ground_projection(event.position) != null:
 				set_mousepan(true)
@@ -98,27 +69,25 @@ func _unhandled_input(event):
 		return
 		
 	if mousepan and event is InputEventMouseMotion:
-		# Move the fulcrum so that the mouse appears fixed on the ground plane
+		# Move the parent so that the mouse appears fixed on the pan plane
 		var old_grab_pos = get_ground_projection(event.position - event.relative)
 		var new_grab_pos = get_ground_projection(event.position)
 		if old_grab_pos != null and new_grab_pos != null:
-			fulcrum.global_translate(old_grab_pos - new_grab_pos)
+			parent.global_translate(old_grab_pos - new_grab_pos)
 		if consume_events:
 			get_tree().set_input_as_handled()
 		return
 		
 	# Handle button-controlled directional panning
-	if event.is_action("camera_pan_forward") or event.is_action("camera_pan_back"):
-		pan_direction.z = int(Input.is_action_pressed("camera_pan_back"))
-		pan_direction.z -= int(Input.is_action_pressed("camera_pan_forward"))
-		pan_direction = pan_direction.normalized()
+	if event.is_action("pan_forward") or event.is_action("pan_back"):
+		pan_direction.z = int(Input.is_action_pressed("pan_back"))
+		pan_direction.z -= int(Input.is_action_pressed("pan_forward"))
 		if consume_events:
 			get_tree().set_input_as_handled()
 		return
-	if event.is_action("camera_pan_left") or event.is_action("camera_pan_right"):
-		pan_direction.x = int(Input.is_action_pressed("camera_pan_right"))
-		pan_direction.x -= int(Input.is_action_pressed("camera_pan_left"))
-		pan_direction = pan_direction.normalized()
+	if event.is_action("pan_left") or event.is_action("pan_right"):
+		pan_direction.x = int(Input.is_action_pressed("pan_right"))
+		pan_direction.x -= int(Input.is_action_pressed("pan_left"))
 		if consume_events:
 			get_tree().set_input_as_handled()
 		return
