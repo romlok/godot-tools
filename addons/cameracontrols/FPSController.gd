@@ -10,8 +10,10 @@ export(bool) var mouselook = false setget set_mouselook
 export(Vector2) var mouselook_scale = Vector2(PI / 360, PI / 360)
 export(float) var mouselook_hold_timeout = 0.3
 var mouselook_hold_timer
-export(float) var min_pitch = -PI / 2
-export(float) var max_pitch = PI / 2
+# We expose the min/max pitches as degrees, but use rads
+export(float) var min_pitch = -90 setget set_min_pitch
+export(float) var max_pitch = 90 setget set_max_pitch
+var pitch_limits = [null, null]
 var last_mouse_pos = Vector2()
 var used_actions = [
 	"mouselook_toggle",
@@ -34,14 +36,23 @@ func set_mouselook(val):
 	if changed:
 		emit_signal("mouselook_toggled", mouselook)
 	
+func set_min_pitch(val):
+	min_pitch = val
+	# Remember: min is max because forward is -z
+	pitch_limits[1] = -deg2rad(val)
+	
+func set_max_pitch(val):
+	max_pitch = val
+	# Remember: max is min because forward is -z
+	pitch_limits[0] = -deg2rad(val)
+	
+
 func _ready():
 	# Make sure all the actions we expect exist,
 	# so we don't spew errors for unused functionality
 	for action in used_actions:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
-	
-	set_enabled(enabled)
 	
 func _enter_tree():
 	parent = get_parent()
@@ -78,10 +89,10 @@ func _unhandled_input(event):
 		new_y -= event.relative.x * mouselook_scale.x
 		new_x -= event.relative.y * mouselook_scale.y
 		# Make sure we don't go upside-down
-		if new_x < min_pitch:
-			new_x = min_pitch
-		elif new_x > max_pitch:
-			new_x = max_pitch
+		if new_x < pitch_limits[0]:
+			new_x = pitch_limits[0]
+		elif new_x > pitch_limits[1]:
+			new_x = pitch_limits[1]
 		
 		parent.rotation.x = new_x
 		parent.rotation.y = new_y
