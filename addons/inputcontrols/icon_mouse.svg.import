@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_mouse.svg-be5b61d124a6c370148c5c539d0c5dfc.stex"
+path="res://.import/icon_mouse.svg-3746d0430c857a4e97b9242b1aae0acf.stex"
 
 [deps]
 
-source_file="res://addons/cameracontrols/icon_mouse.svg"
-dest_files=[ "res://.import/icon_mouse.svg-be5b61d124a6c370148c5c539d0c5dfc.stex" ]
+source_file="res://addons/inputcontrols/icon_mouse.svg"
+dest_files=[ "res://.import/icon_mouse.svg-3746d0430c857a4e97b9242b1aae0acf.stex" ]
 
 [params]
 
