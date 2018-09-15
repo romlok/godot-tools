@@ -1,26 +1,26 @@
-# Controls the parent Node like it's the middle a potter's wheel
+# Adds pan controls to the parent node
 #
-# Believe it or not, this is just an extension of the FPS functionality
-#
-extends "FPSController.gd"
+extends Node
 
-export(bool) var mousepan = false setget set_mousepan
+var parent
+
+export(bool) var enabled = true setget set_enabled
+export(bool) var mousepan = false
 export(float) var pan_speed = 4
 export(Vector3) var pan_normal = Vector3(0, 1, 0) setget set_pan_normal
 var pan_plane = Plane()
 var pan_direction = Vector3()
+var used_actions = [
+	"pan_forward",
+	"pan_back",
+	"pan_left",
+	"pan_right",
+	"pan_mouse_drag",
+]
 
-func set_mousepan(val):
-	if mouselook:
-		# Can't look and pan at the same time
-		return
-	mousepan = bool(val)
-	
-func set_mouselook(val):
-	if mousepan:
-		# Can't look and pan at the same time
-		return false
-	.set_mouselook(val)
+func set_enabled(val):
+	enabled = val
+	set_process_unhandled_input(val)
 	
 func set_pan_normal(val):
 	pan_normal = val
@@ -31,17 +31,17 @@ func set_pan_normal(val):
 		)
 	
 
-func _init():
-	# Spinnycam has more controls
-	used_actions += [
-		"pan_forward",
-		"pan_back",
-		"pan_left",
-		"pan_right",
-		"pan_mouse_drag",
-	]
 func _ready():
+	set_enabled(enabled)
 	set_pan_normal(pan_normal)
+	# Make sure all the actions we expect exist,
+	# so we don't spew errors for unused functionality
+	for action in used_actions:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+	
+func _enter_tree():
+	parent = get_parent()
 	
 
 func get_ground_projection(coords):
@@ -67,11 +67,10 @@ func _unhandled_input(event):
 	if event.is_action("pan_mouse_drag"):
 		if event.is_pressed():
 			if get_ground_projection(event.position) != null:
-				set_mousepan(true)
+				mousepan = true
 		else:
-			set_mousepan(false)
-		if consume_events:
-			get_tree().set_input_as_handled()
+			mousepan = false
+		get_tree().set_input_as_handled()
 		return
 		
 	if mousepan and event is InputEventMouseMotion:
@@ -80,22 +79,19 @@ func _unhandled_input(event):
 		var new_grab_pos = get_ground_projection(event.position)
 		if old_grab_pos != null and new_grab_pos != null:
 			parent.global_translate(old_grab_pos - new_grab_pos)
-		if consume_events:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 		return
 		
 	# Handle button-controlled directional panning
 	if event.is_action("pan_forward") or event.is_action("pan_back"):
 		pan_direction.z = int(Input.is_action_pressed("pan_back"))
 		pan_direction.z -= int(Input.is_action_pressed("pan_forward"))
-		if consume_events:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 		return
 	if event.is_action("pan_left") or event.is_action("pan_right"):
 		pan_direction.x = int(Input.is_action_pressed("pan_right"))
 		pan_direction.x -= int(Input.is_action_pressed("pan_left"))
-		if consume_events:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 		return
 		
 	

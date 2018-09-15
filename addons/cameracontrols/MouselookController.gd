@@ -18,7 +18,6 @@ var last_mouse_pos = Vector2()
 var used_actions = [
 	"mouselook_toggle",
 ]
-export(bool) var consume_events = true
 
 func set_enabled(val):
 	enabled = val
@@ -48,6 +47,7 @@ func set_max_pitch(val):
 	
 
 func _ready():
+	set_enabled(enabled)
 	# Make sure all the actions we expect exist,
 	# so we don't spew errors for unused functionality
 	for action in used_actions:
@@ -64,8 +64,7 @@ func _unhandled_input(event):
 		if not mouselook:
 			last_mouse_pos = event.position
 		set_mouselook(not mouselook)
-		if consume_events:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 		if mouselook_hold_timeout > 0:
 			# We allow hold-and-drag mouselook for long presses
 			mouselook_hold_timer = get_tree().create_timer(mouselook_hold_timeout)
@@ -78,8 +77,7 @@ func _unhandled_input(event):
 		elif mouselook_hold_timer != null and mouselook_hold_timer.time_left <= 0:
 			if mouselook:
 				set_mouselook(false)
-			if consume_events:
-				get_tree().set_input_as_handled()
+			get_tree().set_input_as_handled()
 			return
 		
 	if not mouselook:
@@ -100,8 +98,7 @@ func _unhandled_input(event):
 		
 		parent.rotation.x = new_x
 		parent.rotation.y = new_y
-		if consume_events:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 		Input.warp_mouse_position(last_mouse_pos)
 		
 	

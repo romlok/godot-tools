@@ -3,15 +3,15 @@ extends EditorPlugin
 
 func _enter_tree():
 	add_custom_type(
-		"FPSController", "Node",
-		preload("FPSController.gd"), preload("icon_mouse.svg")
+		"MouselookController", "Node",
+		preload("MouselookController.gd"), preload("icon_mouse.svg")
 	)
 	add_custom_type(
-		"RTSController", "Node",
-		preload("RTSController.gd"), preload("icon_mouse.svg")
+		"PanController", "Node",
+		preload("PanController.gd"), preload("icon_mouse.svg")
 	)
 	
 func _exit_tree():
-	remove_custom_type("FPSController")
-	remove_custom_type("RTSController")
+	remove_custom_type("MouselookController")
+	remove_custom_type("PanController")
 	
