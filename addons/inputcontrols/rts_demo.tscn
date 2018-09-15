@@ -125,7 +125,7 @@ h_offset = 0.0
 v_offset = 0.0
 doppler_tracking = 0
 projection = 0
-current = true
+current = false
 fov = 70.0
 size = 1.0
 near = 0.05
@@ -148,51 +148,5 @@ mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Transform" ]
-
-[node name="FPS Camera" type="Camera" parent="." index="5"]
-
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
-current = false
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
-_sections_unfolded = [ "Transform" ]
-
-[node name="Indicator" type="MeshInstance" parent="FPS Camera" index="0"]
-
-transform = Transform( -1, 3.25841e-07, 0, 5.30863e-14, 1.62921e-07, -1, -3.25841e-07, -1, -1.62921e-07, 0, 0, 0 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
-skeleton = NodePath("..")
-material/0 = null
-_sections_unfolded = [ "Transform" ]
-
-[node name="MouselookController" type="Node" parent="FPS Camera" index="1"]
-
-script = ExtResource( 3 )
-__meta__ = {
-"_editor_icon": ExtResource( 2 )
-}
-enabled = false
-mouselook = false
-mouselook_scale = Vector2( 0.00872665, 0.00872665 )
-mouselook_hold_timeout = 0.3
-min_pitch = -89.9
-max_pitch = 89.9
 
 

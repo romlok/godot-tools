@@ -1,0 +1,135 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=1]
+[ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector3( 2, 2, 2 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
+
+[sub_resource type="CylinderMesh" id=2]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+top_radius = 0.001
+bottom_radius = 0.5
+height = 2.0
+radial_segments = 64
+rings = 4
+
+[node name="Spatial" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="." index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.79793, 0, -3.4293 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="." index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.87706, -4.76837e-07, 5.44804 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="MeshInstance3" type="MeshInstance" parent="." index="2"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.50712, 0, -3.66308 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="MeshInstance4" type="MeshInstance" parent="." index="3"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.91778, 4.76837e-07, 4.10151 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="FPS Camera" type="Camera" parent="." index="4"]
+
+keep_aspect = 1
+cull_mask = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
+doppler_tracking = 0
+projection = 0
+current = false
+fov = 70.0
+size = 1.0
+near = 0.05
+far = 100.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Indicator" type="MeshInstance" parent="FPS Camera" index="0"]
+
+transform = Transform( -1, 3.25841e-07, 0, 5.30863e-14, 1.62921e-07, -1, -3.25841e-07, -1, -1.62921e-07, 0, 0, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 2 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="MouselookController" type="Node" parent="FPS Camera" index="1"]
+
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
+enabled = true
+mouselook = false
+mouselook_scale = Vector2( 0.00872665, 0.00872665 )
+mouselook_hold_timeout = 0.3
+min_pitch = -89.9
+max_pitch = 89.9
+
+
