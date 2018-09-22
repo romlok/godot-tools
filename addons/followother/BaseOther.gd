@@ -24,7 +24,6 @@ func set_target(val):
 	
 	if val == null:
 		# Wipe out the stored values
-		target_path = null
 		target = null
 		return
 	
@@ -68,6 +67,9 @@ func set_physics_sync(val):
 func _ready():
 	set_enabled(enabled)
 	set_target_path(target_path)
+func _enter_tree():
+	set_target_path(target_path)
+	parent = get_parent()
 	
 func _process(delta):
 	if parent == null or target == null:
