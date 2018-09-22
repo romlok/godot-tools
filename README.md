@@ -15,12 +15,15 @@ position and/or rotation of the target, or just stares intently at it.
 
 Optional interpolation included at no extra charge.
 
-### cameracontrols
+### inputcontrols
 
-FPSController and RTSController can be added as a child of a node, and will
-respond to mouse/action input events to change the parent node's transform.
+MouselookController and PanController can be added as children of a Spatial
+node, and will alter the parent node's transform in response to mouse/input
+events.
 
-Designed to manipulate a Camera, or the parent node of an offset Camera.
+Note that, in line with camera orientation, "forward" for such controlled
+nodes is considered to be the *negative* Z axis.
+
 
 ## Gfx
 
