@@ -37,7 +37,8 @@ func set_target(val):
 	target_path = get_path_to(val)
 	target = val
 	# Listen for if the target disappears
-	target.connect("tree_exited", self, "_on_lost_target")
+	if not target.is_connected("tree_exited", self, "_on_lost_target"):
+		target.connect("tree_exited", self, "_on_lost_target")
 	
 	# Active tool scripts have all their vars wiped when saved,
 	# but _ready doesn't get called. So we fetch parent again here.
@@ -69,7 +70,6 @@ func _ready():
 	set_target_path(target_path)
 func _enter_tree():
 	set_target_path(target_path)
-	parent = get_parent()
 	
 func _process(delta):
 	if parent == null or target == null:
@@ -85,9 +85,8 @@ func _on_lost_target():
 	# The target we had has left the building
 	target = null
 	# Wait a bit and try to reconnect (in case of eg. "change type")
-	var tree = get_tree()
-	if tree != null:
-		yield(tree, "idle_frame")
+	if is_inside_tree():
+		yield(get_tree(), "idle_frame")
 		set_target_path(target_path)
 	
 
