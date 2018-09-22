@@ -15,7 +15,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "cameracontrols", "followother" )
+enabled=PoolStringArray( "followother", "inputcontrols" )
 
 [input]
 
