@@ -20,7 +20,7 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[node name="Spatial" type="Spatial" index="0"]
+[node name="Spatial" type="Spatial"]
 
 [node name="MoveMe" type="RigidBody" parent="." index="0"]
 
@@ -93,6 +93,7 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../MoveMe")
+target_bone = ""
 enabled = true
 interpolate_speed = 8.0
 physics_sync = false
@@ -124,6 +125,7 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 target_path = NodePath("../../Spatial/MeshInstance")
+target_bone = ""
 enabled = true
 interpolate_speed = 4.0
 physics_sync = false
