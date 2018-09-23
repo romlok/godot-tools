@@ -20,7 +20,7 @@ func do_process(delta):
 func mirror_position(delta):
 	# Work out he actual point we're to follow
 	var parent_pos = parent.global_transform.origin
-	var target_pos = Vector3(target.global_transform.origin)
+	var target_pos = Vector3(get_target_global_transform().origin)
 	if not follow_x:
 		target_pos.x = parent_pos.x
 	if not follow_y:
@@ -38,13 +38,14 @@ func mirror_position(delta):
 		parent.global_transform.origin = target_pos
 	
 func mirror_rotation(delta):
+	var target_trans = get_target_global_transform()
 	var our_quat = Quat(parent.global_transform.basis)
-	var target_quat = Quat(target.global_transform.basis)
+	var target_quat = Quat(target_trans.basis)
 	var diff = (our_quat + -target_quat).length_squared()
 	if interpolate_speed > 0.001 and diff > 0.000001:
 		parent.global_transform.basis = Basis(
 			our_quat.slerp(target_quat, interpolate_speed * delta)
 		)
 	elif diff > 0:
-		parent.global_transform.basis = target.global_transform.basis
+		parent.global_transform.basis = target_trans.basis
 	

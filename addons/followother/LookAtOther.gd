@@ -9,7 +9,7 @@ export(bool) var negative_z = true #
 func do_process(delta):
 	# Make the parent look at the target
 	var new_basis = parent.global_transform.looking_at(
-		target.global_transform.origin, up_vector
+		get_target_global_transform().origin, up_vector
 	).basis
 	if not negative_z:
 		# We want to look with our +Z axis

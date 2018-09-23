@@ -81,6 +81,13 @@ func _physics_process(delta):
 	do_process(delta)
 	
 
+func get_target_global_transform():
+	# Returns the global transform of the target
+	if target == null:
+		return
+	return target.global_transform
+	
+
 func _on_lost_target():
 	# The target we had has left the building
 	target = null
