@@ -5,6 +5,7 @@ extends Node
 # Configuration
 export(NodePath) var target_path setget set_target_path
 export(String) var target_bone = "" setget set_target_bone
+export(String) var parent_bone = "" setget set_parent_bone
 export(bool) var enabled = false setget set_enabled
 export(float) var interpolate_speed = 0
 export(bool) var physics_sync = false setget set_physics_sync
@@ -20,20 +21,25 @@ func set_target_path(val):
 	else:
 		target = null
 	
+func set_parent_bone(val):
+	parent_bone = val
+	check_bone(parent, parent_bone)
 func set_target_bone(val):
 	target_bone = val
-	if target and target_bone:
+	check_bone(target, target_bone)
+func check_bone(node, bone_name):
+	if node and bone_name:
 		# Check that the specified bone is valid
-		if not target is Skeleton:
-			print("WARN: Target for '{name}' is not a Skeleton: '{path}'".format({
+		if not node is Skeleton:
+			print("WARN: Node is not a Skeleton: '{name}/{path}'".format({
 				"name": name,
-				"path": str(target_path),
+				"path": str(get_path_to(node)),
 			}))
-		elif target.find_bone(target_bone) == -1:
-			print("WARN: Target for '{name}' does not have '{bone}' bone: '{path}'".format({
+		elif node.find_bone(bone_name) == -1:
+			print("WARN: Skeleton does not have '{bone}' bone: '{name}/{path}'".format({
 				"name": name,
 				"bone": target_bone,
-				"path": str(target_path),
+				"path": str(get_path_to(node)),
 			}))
 	
 func set_target(val):
@@ -110,6 +116,12 @@ func is_config_valid():
 		return false
 	if target == null:
 		return false
+	if parent_bone:
+		# Make sure the specified bone exists
+		if not parent is Skeleton:
+			return false
+		if parent.find_bone(parent_bone) == -1:
+			return false
 	if target_bone:
 		# Make sure the specified bone exists
 		if not target is Skeleton:
@@ -118,16 +130,31 @@ func is_config_valid():
 			return false
 	return true
 	
-func get_target_global_transform():
-	# Returns the global transform of the target
-	# We assume that is_config_valid() == true. If not, on your head be it!
-	if target_bone:
-		# The "global" pose of a bone is actually relative to the skeleton
-		var bone_id = target.find_bone(target_bone)
-		return target.global_transform * target.get_bone_global_pose(bone_id)
-	else:
-		return target.global_transform
+func get_parent_global_transform():
+	# Returns the global transform of the affected parent (node or bone)
+	return get_node_or_bone_global_transform(parent, parent_bone)
 	
+func get_target_global_transform():
+	# Returns the global transform of the target (node or bone)
+	return get_node_or_bone_global_transform(target, target_bone)
+	
+func get_node_or_bone_global_transform(node, bone_name):
+	# We assume that is_config_valid() == true. If not, on your head be it!
+	if bone_name:
+		# The "global" pose of a bone is actually relative to the skeleton
+		var bone_id = node.find_bone(bone_name)
+		return node.global_transform * node.get_bone_global_pose(bone_id)
+	else:
+		return node.global_transform
+	
+func set_parent_global_transform(trans):
+	# Sets the global transform of the affected parent (node or bone)
+	if parent_bone:
+		var bone_id = parent.find_bone(parent_bone)
+		var rel_trans = trans * parent.global_transform.inverse()
+		parent.set_bone_global_pose(bone_id, rel_trans)
+	else:
+		parent.global_transform = trans
 
 func _on_lost_target():
 	# The target we had has left the building

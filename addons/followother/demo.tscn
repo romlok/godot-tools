@@ -94,6 +94,7 @@ __meta__ = {
 }
 target_path = NodePath("../../MoveMe")
 target_bone = ""
+parent_bone = ""
 enabled = true
 interpolate_speed = 8.0
 physics_sync = false
@@ -126,6 +127,7 @@ __meta__ = {
 }
 target_path = NodePath("../../Spatial/MeshInstance")
 target_bone = ""
+parent_bone = ""
 enabled = true
 interpolate_speed = 4.0
 physics_sync = false

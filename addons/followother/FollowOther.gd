@@ -11,6 +11,9 @@ export(bool) var follow_z = true
 export(bool) var follow_rotation = true
 
 
+func get_configuration_warning():
+	return "hi"
+	
 func do_process(delta):
 	if follow_x or follow_y or follow_z:
 		mirror_position(delta)
@@ -19,7 +22,8 @@ func do_process(delta):
 	
 func mirror_position(delta):
 	# Work out he actual point we're to follow
-	var parent_pos = parent.global_transform.origin
+	var parent_trans = get_parent_global_transform()
+	var parent_pos = parent_trans.origin
 	var target_pos = Vector3(get_target_global_transform().origin)
 	if not follow_x:
 		target_pos.x = parent_pos.x
@@ -30,22 +34,27 @@ func mirror_position(delta):
 	
 	var diff = parent_pos.distance_to(target_pos)
 	if interpolate_speed > 0.001 and diff > 0.001:
-		parent.global_transform.origin = parent_pos.linear_interpolate(
+		parent_trans.origin = parent_pos.linear_interpolate(
 			target_pos,
 			interpolate_speed * delta
 		)
 	elif diff > 0:
-		parent.global_transform.origin = target_pos
+		parent_trans.origin = target_pos
+	
+	set_parent_global_transform(parent_trans)
 	
 func mirror_rotation(delta):
+	var parent_trans = get_parent_global_transform()
 	var target_trans = get_target_global_transform()
-	var our_quat = Quat(parent.global_transform.basis)
+	var our_quat = Quat(parent_trans.basis)
 	var target_quat = Quat(target_trans.basis)
 	var diff = (our_quat + -target_quat).length_squared()
 	if interpolate_speed > 0.001 and diff > 0.000001:
-		parent.global_transform.basis = Basis(
+		parent_trans.basis = Basis(
 			our_quat.slerp(target_quat, interpolate_speed * delta)
 		)
 	elif diff > 0:
-		parent.global_transform.basis = target_trans.basis
+		parent_trans.basis = target_trans.basis
+	
+	set_parent_global_transform(parent_trans)
 	
