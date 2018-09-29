@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://models/boxguy/boxguy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/followother/LookAtOther.gd" type="Script" id=2]
@@ -6,6 +6,15 @@
 [ext_resource path="res://addons/followother/FollowOther.gd" type="Script" id=4]
 [ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=5]
 [ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=6]
+
+[sub_resource type="SphereMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+radius = 0.1
+height = 0.2
+radial_segments = 64
+rings = 32
+is_hemisphere = false
 
 [node name="DemoScene" type="Spatial" index="0"]
 
@@ -17,7 +26,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
-target_path = NodePath("../../../../HeadFulcrum/Eyes/Focus")
+target_path = NodePath("../../../../HeadFulcrum/Focus")
 target_bone = ""
 parent_bone = "Head"
 enabled = true
@@ -153,14 +162,72 @@ follow_y = true
 follow_z = true
 follow_rotation = false
 
-[node name="Eyes" type="Spatial" parent="HeadFulcrum" index="1"]
+[node name="MouselookController" type="Node" parent="HeadFulcrum" index="1"]
+
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 6 )
+}
+enabled = true
+mouselook = false
+mouselook_scale = Vector2( 0.00872665, 0.00872665 )
+mouselook_hold_timeout = 0.3
+min_pitch = -89.9
+max_pitch = 85.0
+
+[node name="Focus" type="Spatial" parent="HeadFulcrum" index="2"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="MeshInstance" type="MeshInstance" parent="HeadFulcrum/Focus" index="0"]
+
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="Eyes" type="Spatial" parent="HeadFulcrum" index="3"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.15 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Camera" type="Camera" parent="HeadFulcrum/Eyes" index="0"]
+[node name="ThirdPersonLooker" type="Spatial" parent="HeadFulcrum" index="4"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+transform = Transform( 1, 4.78246e-07, 0, -4.76837e-07, 0.997054, 0.0766965, 3.66798e-08, -0.0766965, 0.997054, 0, 0.769911, 0.00883675 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="ThirdPerson" type="Spatial" parent="HeadFulcrum/ThirdPersonLooker" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.68434e-14, 2.38419e-07, 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LookAtOther" type="Node" parent="HeadFulcrum/ThirdPersonLooker" index="1"]
+
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+target_path = NodePath("../../Focus")
+target_bone = ""
+parent_bone = ""
+enabled = true
+interpolate_speed = 0
+physics_sync = false
+up_vector = Vector3( 0, 1, 0 )
+negative_z = true
+
+[node name="Camera" type="Camera" parent="." index="2"]
+
+transform = Transform( -1, -2.81324e-09, 3.65717e-08, 0, 0.997054, 0.0766965, -3.66798e-08, 0.0766965, -0.997055, 4.76837e-07, 2.45, -3 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -175,23 +242,22 @@ near = 0.05
 far = 100.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="Focus" type="Spatial" parent="HeadFulcrum/Eyes" index="1"]
+[node name="FollowOther" type="Node" parent="Camera" index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="MouselookController" type="Node" parent="HeadFulcrum" index="2"]
-
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 __meta__ = {
-"_editor_icon": ExtResource( 6 )
+"_editor_icon": ExtResource( 3 )
 }
+target_path = NodePath("../../HeadFulcrum/ThirdPersonLooker/ThirdPerson")
+target_bone = ""
+parent_bone = ""
 enabled = true
-mouselook = false
-mouselook_scale = Vector2( 0.00872665, 0.00872665 )
-mouselook_hold_timeout = 0.3
-min_pitch = -89.9
-max_pitch = 89.9
+interpolate_speed = 0
+physics_sync = false
+follow_x = true
+follow_y = true
+follow_z = true
+follow_rotation = true
 
 
 [editable path="Boxguy"]
