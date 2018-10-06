@@ -21,7 +21,7 @@ height = 2.0
 radial_segments = 64
 rings = 4
 
-[node name="Spatial" type="Spatial" index="0"]
+[node name="Spatial" type="Spatial"]
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="0"]
 
