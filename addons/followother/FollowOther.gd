@@ -2,7 +2,7 @@
 #
 # NB. Currently mirroring rotation ignores scale. Because Basis.
 tool
-extends "BaseOther.gd"
+extends "BaseTargetOther.gd"
 
 # Configuration
 export(bool) var follow_x = true

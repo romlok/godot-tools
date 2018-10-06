@@ -1,6 +1,6 @@
 # Node which keeps its parent looking at the target node
 tool
-extends "BaseOther.gd"
+extends "BaseTargetOther.gd"
 
 export(Vector3) var up_vector = Vector3(0, 1, 0)
 export(bool) var enable_pitching = true
