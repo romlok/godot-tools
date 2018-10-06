@@ -151,7 +151,7 @@ func set_parent_global_transform(trans):
 	# Sets the global transform of the affected parent (node or bone)
 	if parent_bone:
 		var bone_id = parent.find_bone(parent_bone)
-		var rel_trans = trans * parent.global_transform.inverse()
+		var rel_trans = parent.global_transform.inverse() * trans
 		parent.set_bone_global_pose(bone_id, rel_trans)
 	else:
 		parent.global_transform = trans

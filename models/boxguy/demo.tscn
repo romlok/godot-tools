@@ -142,6 +142,22 @@ data = {
 } ]
 }
 
+[node name="LookAtOther" type="Node" parent="Boxguy" index="3"]
+
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+target_path = NodePath("../../HeadFulcrum/Focus")
+target_bone = ""
+parent_bone = ""
+enabled = true
+interpolate_speed = 2.0
+physics_sync = false
+up_vector = Vector3( 0, 1, 0 )
+enable_pitching = false
+negative_z = false
+
 [node name="HeadFulcrum" type="Spatial" parent="." index="1"]
 
 transform = Transform( -1, 4.76837e-07, 0, 4.76837e-07, 1, 0, 0, 0, -1, 0, 1.45, 0 )
