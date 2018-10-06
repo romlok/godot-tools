@@ -28,12 +28,12 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+enabled = true
+physics_sync = false
 parent_bone = "Head"
 target_path = NodePath("../../../../HeadFulcrum/Focus")
 target_bone = ""
-enabled = true
 interpolate_speed = 0
-physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
@@ -150,19 +150,19 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../HeadFulcrum/Focus")
 target_bone = ""
-enabled = true
 interpolate_speed = 2.0
-physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = false
 negative_z = false
 
 [node name="HeadFulcrum" type="Spatial" parent="." index="1"]
 
-transform = Transform( -1.00003, 4.76849e-07, 5.96046e-07, 4.76837e-07, 1, 0, -5.96046e-07, 2.84217e-13, -1.00003, 0, 1.43727, 0 )
+transform = Transform( -1.00003, 4.76849e-07, 5.96046e-07, 4.76837e-07, 1, 0, -5.96046e-07, 2.84217e-13, -1.00003, 0, 1.392, 0 )
 
 [node name="FollowOther" type="Node" parent="HeadFulcrum" index="0"]
 
@@ -170,12 +170,12 @@ script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../Boxguy/Armature/Skeleton")
 target_bone = "Head"
-enabled = true
 interpolate_speed = 0
-physics_sync = false
 follow_x = true
 follow_y = true
 follow_z = true
@@ -221,7 +221,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonLooker" type="Spatial" parent="HeadFulcrum" index="4"]
 
-transform = Transform( 0.99997, 4.78815e-07, -7.43461e-09, -4.76823e-07, 0.997055, 0.0766945, 4.41351e-08, -0.0766921, 0.997025, -7.46332e-08, 0.769913, 0.00883688 )
+transform = Transform( 0.99997, 4.78808e-07, -7.34036e-09, -4.76823e-07, 0.997055, 0.0766944, 4.40406e-08, -0.0766921, 0.997025, -7.36872e-08, 0.769913, 0.00883688 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="HeadFulcrum/ThirdPersonLooker" index="0"]
@@ -235,19 +235,19 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../Focus")
 target_bone = ""
-enabled = true
 interpolate_speed = 0
-physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -4.9097e-08, 6.38279e-07, 0, 0.997055, 0.0766945, -6.40164e-07, 0.0766944, -0.997055, 2.36187e-06, 2.43726, -3 )
+transform = Transform( -1, -4.90898e-08, 6.38185e-07, 0, 0.997055, 0.0766944, -6.4007e-07, 0.0766944, -0.997055, 2.36064e-06, 2.39199, -3 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -268,12 +268,12 @@ script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../HeadFulcrum/ThirdPersonLooker/ThirdPerson")
 target_bone = ""
-enabled = true
 interpolate_speed = 0
-physics_sync = false
 follow_x = true
 follow_y = true
 follow_z = true

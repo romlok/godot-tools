@@ -5,9 +5,7 @@ extends "BaseParentAffecter.gd"
 # Configuration
 export(NodePath) var target_path setget set_target_path
 export(String) var target_bone = "" setget set_target_bone
-export(bool) var enabled = false setget set_enabled
 export(float) var interpolate_speed = 0
-export(bool) var physics_sync = false setget set_physics_sync
 
 var target setget set_target
 
@@ -54,62 +52,24 @@ func set_target(val):
 	# but _ready doesn't get called. So we fetch parent again here.
 	parent = get_parent()
 	
-func set_enabled(val):
-	enabled = bool(val)
-	if enabled:
-		# Turn on what needs to be on
-		set_physics_sync(physics_sync)
-	else:
-		# Switch everything off
-		set_physics_process(false)
-		set_process(false)
-	
-func set_physics_sync(val):
-	val = bool(val)
-	physics_sync = val
-	
-	if Engine.editor_hint:
-		# The editor doesn't process physics
-		val = false
-	set_physics_process(val)
-	set_process(not val)
-	
 
 func _ready():
-	set_enabled(enabled)
 	set_target_path(target_path)
 func _enter_tree():
 	set_target_path(target_path)
 	
-func _process(delta):
-	if not is_config_valid():
-		return
-	do_process(delta)
-func _physics_process(delta):
-	if not is_config_valid():
-		return
-	do_process(delta)
-	
 
 func is_config_valid():
 	# Returns whether this node's configuration is fit for purpose
-	if parent == null:
-		return false
 	if target == null:
 		return false
-	if parent_bone:
-		# Make sure the specified bone exists
-		if not parent is Skeleton:
-			return false
-		if parent.find_bone(parent_bone) == -1:
-			return false
 	if target_bone:
 		# Make sure the specified bone exists
 		if not target is Skeleton:
 			return false
 		if target.find_bone(target_bone) == -1:
 			return false
-	return true
+	return .is_config_valid()
 	
 func get_target_global_transform():
 	# Returns the global transform of the target (node or bone)
@@ -124,7 +84,3 @@ func _on_lost_target():
 		yield(get_tree(), "idle_frame")
 		set_target_path(target_path)
 	
-
-func do_process(delta):
-	# To be overridden
-	pass

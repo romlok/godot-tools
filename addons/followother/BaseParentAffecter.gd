@@ -3,10 +3,32 @@ tool
 extends Node
 
 # Configuration
+export(bool) var enabled = false setget set_enabled
+export(bool) var physics_sync = false setget set_physics_sync
 export(String) var parent_bone = "" setget set_parent_bone
 
 var parent
 
+func set_enabled(val):
+	enabled = bool(val)
+	if enabled:
+		# Turn on what needs to be on
+		set_physics_sync(physics_sync)
+	else:
+		# Switch everything off
+		set_physics_process(false)
+		set_process(false)
+	
+func set_physics_sync(val):
+	val = bool(val)
+	physics_sync = val
+	
+	if Engine.editor_hint:
+		# The editor doesn't process physics
+		val = false
+	set_physics_process(val)
+	set_process(not val)
+	
 func set_parent_bone(val):
 	parent_bone = val
 	check_bone(parent, parent_bone)
@@ -28,9 +50,39 @@ func check_bone(node, bone_name):
 	
 func _ready():
 	parent = get_parent()
+	set_enabled(enabled)
 func _enter_tree():
 	parent = get_parent()
+	set_enabled(enabled)
 	
+func _process(delta):
+	if not is_config_valid():
+		return
+	do_process(delta)
+func _physics_process(delta):
+	if not is_config_valid():
+		return
+	do_process(delta)
+	
+func is_config_valid():
+	# Returns whether this node's configuration is fit for purpose
+	# Extend this method in subclasses if need be,
+	# but remember to also `return .is_config_valid()`
+	if parent == null:
+		return false
+	if parent_bone:
+		# Make sure the specified bone exists
+		if not parent is Skeleton:
+			return false
+		if parent.find_bone(parent_bone) == -1:
+			return false
+	return true
+	
+func do_process(delta):
+	# To be overridden
+	pass
+	
+
 func get_parent_global_transform():
 	# Returns the global transform of the affected parent (node or bone)
 	return get_node_or_bone_global_transform(parent, parent_bone)

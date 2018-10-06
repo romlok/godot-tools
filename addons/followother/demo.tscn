@@ -20,7 +20,7 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[node name="Spatial" type="Spatial" index="0"]
+[node name="Spatial" type="Spatial"]
 
 [node name="MoveMe" type="RigidBody" parent="." index="0"]
 
@@ -92,12 +92,12 @@ script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../MoveMe")
 target_bone = ""
-enabled = true
 interpolate_speed = 8.0
-physics_sync = false
 follow_x = true
 follow_y = true
 follow_z = true
@@ -125,12 +125,12 @@ script = ExtResource( 3 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
+enabled = true
+physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../Spatial/MeshInstance")
 target_bone = ""
-enabled = true
 interpolate_speed = 4.0
-physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
