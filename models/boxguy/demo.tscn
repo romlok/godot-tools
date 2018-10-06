@@ -33,6 +33,7 @@ enabled = true
 interpolate_speed = 0
 physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
+enable_pitching = true
 negative_z = true
 
 [node name="AnimationTreePlayer" parent="Boxguy" index="2"]
@@ -202,7 +203,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonLooker" type="Spatial" parent="HeadFulcrum" index="4"]
 
-transform = Transform( 1, 4.78246e-07, 0, -4.76837e-07, 0.997054, 0.0766965, 3.66798e-08, -0.0766965, 0.997054, 0, 0.769911, 0.00883675 )
+transform = Transform( 1, 4.78246e-07, 1.06581e-14, -4.76837e-07, 0.997054, 0.0766965, 3.66798e-08, -0.0766965, 0.997054, 1.13687e-13, 0.769911, 0.00883675 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="HeadFulcrum/ThirdPersonLooker" index="0"]
@@ -223,11 +224,12 @@ enabled = true
 interpolate_speed = 0
 physics_sync = false
 up_vector = Vector3( 0, 1, 0 )
+enable_pitching = true
 negative_z = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -2.81324e-09, 3.65717e-08, 0, 0.997054, 0.0766965, -3.66798e-08, 0.0766965, -0.997055, 4.76837e-07, 2.45, -3 )
+transform = Transform( -1, -2.81324e-09, 3.65717e-08, 0, 0.997054, 0.0766965, -3.66798e-08, 0.0766965, -0.997054, 4.76837e-07, 2.45, -3 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
