@@ -13,6 +13,7 @@ func set_enabled(val):
 	enabled = bool(val)
 	if enabled:
 		# Turn on what needs to be on
+		parent = get_parent()
 		set_physics_sync(physics_sync)
 	else:
 		# Switch everything off
@@ -104,3 +105,15 @@ func set_parent_global_transform(trans):
 		parent.set_bone_global_pose(bone_id, rel_trans)
 	else:
 		parent.global_transform = trans
+	
+func get_parent_global_rest_transform():
+	# Returns the rest global transform for the parent (node or bone)
+	if parent_bone:
+		var bone_id = parent.find_bone(parent_bone)
+		return parent.global_transform * parent.get_bone_rest(bone_id)
+	else:
+		var grandparent = parent.get_parent()
+		if "global_transform" in grandparent:
+			return parent.get_parent().global_transform
+		else:
+			return Transform()

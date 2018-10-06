@@ -55,8 +55,10 @@ func set_target(val):
 
 func _ready():
 	set_target_path(target_path)
+	._ready()
 func _enter_tree():
 	set_target_path(target_path)
+	._enter_tree()
 	
 
 func is_config_valid():
