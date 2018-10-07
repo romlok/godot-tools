@@ -22,7 +22,7 @@ is_hemisphere = false
 
 [node name="Boxguy" parent="." index="0" instance=ExtResource( 1 )]
 
-transform = Transform( -0.710283, 0, -0.703916, 0, 1, 0, 0.703916, 0, -0.710283, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Skeleton" parent="Boxguy/Armature" index="0"]
@@ -54,8 +54,8 @@ __meta__ = {
 enabled = true
 physics_sync = false
 parent_bone = "Head"
-max_pitch_degrees = 80.0
-max_yaw_degrees = 80.0
+max_pitch_degrees = 20.0
+max_yaw_degrees = 45.0
 
 [node name="AnimationTreePlayer" parent="Boxguy" index="2"]
 
@@ -181,7 +181,7 @@ negative_z = false
 
 [node name="HeadFulcrum" type="Spatial" parent="." index="1"]
 
-transform = Transform( -1.00003, 0, -3.25851e-07, 0, 1, 0, 3.25851e-07, 0, -1.00003, 0, 1.4357, 0 )
+transform = Transform( -1.00003, 0, -3.25851e-07, 0, 1, 0, 3.25851e-07, 0, -1.00003, 8.04761e-11, 1.22734, -2.75677e-15 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="FollowOther" type="Node" parent="HeadFulcrum" index="0"]
@@ -216,7 +216,7 @@ max_pitch = 85.0
 
 [node name="Focus" type="Spatial" parent="HeadFulcrum" index="2"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+transform = Transform( 1, 0, 1.02318e-12, 0, 1, 0, -1.02318e-12, 0, 1, 0, 0, -10 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="HeadFulcrum/Focus" index="0"]
@@ -241,7 +241,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonLooker" type="Spatial" parent="HeadFulcrum" index="4"]
 
-transform = Transform( 0.99997, -1.8019e-10, 2.34252e-09, 0, 0.997055, 0.0766944, -2.34945e-09, -0.0766921, 0.997025, 2.35159e-08, 0.769913, 0.00884075 )
+transform = Transform( 0.99997, -1.78456e-10, 2.32001e-09, 0, 0.997055, 0.0766944, -2.32686e-09, -0.0766921, 0.997025, 2.32897e-08, 0.769913, 0.00884074 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="HeadFulcrum/ThirdPersonLooker" index="0"]
@@ -267,7 +267,7 @@ negative_z = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, 2.51704e-08, -3.27224e-07, 0, 0.997055, 0.0766944, 3.28191e-07, 0.0766944, -0.997055, -1.00807e-06, 2.43569, -3.00001 )
+transform = Transform( -1, 2.51687e-08, -3.27202e-07, 0, 0.997055, 0.0766944, 3.28168e-07, 0.0766944, -0.997055, -1.0077e-06, 2.22734, -3.00001 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
