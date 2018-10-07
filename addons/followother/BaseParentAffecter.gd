@@ -57,10 +57,14 @@ func _enter_tree():
 	set_enabled(enabled)
 	
 func _process(delta):
+	if not enabled:
+		return
 	if not is_config_valid():
 		return
 	do_process(delta)
 func _physics_process(delta):
+	if not enabled:
+		return
 	if not is_config_valid():
 		return
 	do_process(delta)
