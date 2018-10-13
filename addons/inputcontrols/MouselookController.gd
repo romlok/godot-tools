@@ -7,12 +7,13 @@ var parent
 
 export(bool) var enabled = true setget set_enabled
 export(bool) var mouselook = false setget set_mouselook
-export(Vector2) var mouselook_scale = Vector2(PI / 360, PI / 360)
+export(Vector2) var mouselook_scale = Vector2(1, 1) setget set_mouselook_scale
 export(float) var mouselook_hold_timeout = 0.3
 var mouselook_hold_timer
 # We expose the min/max pitches as degrees, but use rads
 export(float) var min_pitch = -89.9 setget set_min_pitch
 export(float) var max_pitch = 89.9 setget set_max_pitch
+var mouselook_scale_rads = Vector2()
 var pitch_limits = [null, null]
 var last_mouse_pos = Vector2()
 var used_actions = [
@@ -34,6 +35,11 @@ func set_mouselook(val):
 			Input.warp_mouse_position(last_mouse_pos)
 	if changed:
 		emit_signal("mouselook_toggled", mouselook)
+	
+func set_mouselook_scale(val):
+	mouselook_scale = val
+	# The exposed var is set in degrees turned per unit moused
+	mouselook_scale_rads = mouselook_scale * (PI / 180)
 	
 func set_min_pitch(val):
 	min_pitch = val
@@ -88,8 +94,8 @@ func _unhandled_input(event):
 		# Mouselook ahoy!
 		var new_y = parent.rotation.y
 		var new_x = parent.rotation.x
-		new_y -= event.relative.x * mouselook_scale.x
-		new_x -= event.relative.y * mouselook_scale.y
+		new_y -= event.relative.x * mouselook_scale_rads.x
+		new_x -= event.relative.y * mouselook_scale_rads.y
 		# Make sure we don't go upside-down
 		if new_x < pitch_limits[0]:
 			new_x = pitch_limits[0]

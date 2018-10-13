@@ -189,7 +189,7 @@ __meta__ = {
 }
 enabled = true
 mouselook = false
-mouselook_scale = Vector2( 0.008727, -0.008727 )
+mouselook_scale = Vector2( 1, -1 )
 mouselook_hold_timeout = 0.3
 min_pitch = -89.9
 max_pitch = 85.0
