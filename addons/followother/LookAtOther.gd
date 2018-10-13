@@ -5,6 +5,7 @@ extends "BaseTargetOther.gd"
 export(Vector3) var up_vector = Vector3(0, 1, 0)
 export(bool) var enable_pitching = true
 export(bool) var negative_z = true
+export(bool) var exorcist = true
 
 
 func do_process(delta):
@@ -13,10 +14,27 @@ func do_process(delta):
 	var target_point = get_target_global_transform().origin
 	if not enable_pitching:
 		# Find the equivalent point on our horizontal plane
-		target_point = target_point.slide(up_vector) + parent_trans.origin
+		target_point = target_point.slide(up_vector)
+		target_point += (up_vector * up_vector.dot(parent_trans.origin))
 	var new_basis = parent_trans.looking_at(
 		target_point, up_vector
 	).basis
+	
+	if not exorcist:
+		# We want to prevent turning a full 360
+		var parent_vec = parent_trans.basis.z.normalized()
+		var target_vec = new_basis.z.normalized()
+		var parent_side_vec = parent_trans.basis.x.normalized()
+		var rest_basis = get_parent_global_rest_transform().basis
+		if sign(rest_basis.x.dot(parent_vec)) != sign(rest_basis.x.dot(target_vec)):
+			# The parent and target are on opposite sides of forward
+			if sign(parent_side_vec.dot(rest_basis.z)) != sign(parent_side_vec.dot(target_vec)):
+				# Forward and the target are on opposite sides of the parent
+				# Which means that we need to take the long route round
+				# Which we do by changing our target to the mid-point on the long route
+				target_point = parent_vec + target_vec + parent_trans.origin
+				new_basis = parent_trans.looking_at(target_point, up_vector).basis
+		
 	if not negative_z:
 		# We want to look with our +Z axis
 		new_basis = new_basis.rotated(new_basis.y, PI)

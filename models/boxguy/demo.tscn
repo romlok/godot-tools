@@ -52,6 +52,7 @@ interpolate_speed = 6.0
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
+exorcist = false
 
 [node name="AnimationTreePlayer" parent="Boxguy" index="2"]
 
@@ -180,6 +181,7 @@ follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = false
+exorcist = true
 
 [node name="MouselookController" type="Node" parent="ViewFulcrum" index="1"]
 
@@ -221,7 +223,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum" index="4"]
 
-transform = Transform( -0.99997, -7.5904e-09, 9.85127e-08, 0, 0.997045, 0.0768223, -9.88047e-08, 0.07682, -0.997015, 9.87202e-07, 0.769841, 0.00885003 )
+transform = Transform( -0.99997, -7.54028e-09, 9.78622e-08, 0, 0.997045, 0.0768223, -9.81522e-08, 0.07682, -0.997015, 9.80683e-07, 0.769841, 0.0088513 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum" index="0"]
@@ -244,6 +246,7 @@ interpolate_speed = 0
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
+exorcist = true
 
 [node name="HeadFulcrum" type="Spatial" parent="." index="2"]
 
@@ -283,11 +286,12 @@ physics_sync = false
 parent_bone = ""
 target_path = NodePath("../../ViewFulcrum")
 target_bone = ""
-interpolate_speed = 0
+interpolate_speed = 0.0
 follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = true
+exorcist = true
 
 [node name="ConstrainRotation" type="Node" parent="HeadFulcrum" index="2"]
 
@@ -299,12 +303,12 @@ enabled = true
 physics_sync = false
 parent_bone = ""
 max_pitch_degrees = 80.0
-max_yaw_degrees = 135.0
+max_yaw_degrees = 110.0
 negative_z = false
 
 [node name="Camera" type="Camera" parent="." index="3"]
 
-transform = Transform( -1, -7.59063e-09, 9.85157e-08, 0, 0.997045, 0.0768223, -9.88076e-08, 0.0768223, -0.997045, 1.28278e-06, 2.45031, -2.98228 )
+transform = Transform( -1, -7.54051e-09, 9.78651e-08, 0, 0.997045, 0.0768223, -9.81551e-08, 0.0768223, -0.997045, 1.27431e-06, 2.45031, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -335,6 +339,7 @@ follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = true
+exorcist = true
 
 
 [editable path="Boxguy"]
