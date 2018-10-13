@@ -102,7 +102,6 @@ follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = true
-exorcist = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 

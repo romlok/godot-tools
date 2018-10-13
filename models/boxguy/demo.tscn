@@ -4,19 +4,10 @@
 [ext_resource path="res://addons/followother/LookAtOther.gd" type="Script" id=2]
 [ext_resource path="res://addons/followother/icon_tween.svg" type="Texture" id=3]
 [ext_resource path="res://addons/followother/FollowOther.gd" type="Script" id=4]
-[ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=5]
-[ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=6]
-[ext_resource path="res://addons/followother/ConstrainRotation.gd" type="Script" id=7]
-[ext_resource path="res://addons/followother/icon_reparent.svg" type="Texture" id=8]
-
-[sub_resource type="SphereMesh" id=1]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-radius = 0.1
-height = 0.2
-radial_segments = 64
-rings = 32
-is_hemisphere = false
+[ext_resource path="res://addons/followother/ConstrainRotation.gd" type="Script" id=5]
+[ext_resource path="res://addons/followother/icon_reparent.svg" type="Texture" id=6]
+[ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=7]
+[ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=8]
 
 [sub_resource type="CylinderMesh" id=2]
 
@@ -27,10 +18,20 @@ height = 0.5
 radial_segments = 64
 rings = 4
 
+[sub_resource type="SphereMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+radius = 0.1
+height = 0.2
+radial_segments = 64
+rings = 32
+is_hemisphere = false
+
 [node name="DemoScene" type="Spatial" index="0"]
 
 [node name="Boxguy" parent="." index="0" instance=ExtResource( 1 )]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Skeleton" parent="Boxguy/Armature" index="0"]
@@ -46,7 +47,7 @@ __meta__ = {
 enabled = true
 physics_sync = false
 parent_bone = "Head"
-target_path = NodePath("../../../../HeadFulcrum/HeadTarget")
+target_path = NodePath("../../../HeadFulcrum/HeadTarget")
 target_bone = ""
 interpolate_speed = 6.0
 up_vector = Vector3( 0, 1, 0 )
@@ -160,6 +161,63 @@ data = {
 } ]
 }
 
+[node name="HeadFulcrum" type="Spatial" parent="Boxguy" index="3"]
+
+transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HeadTarget" type="Spatial" parent="Boxguy/HeadFulcrum" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxguy/HeadFulcrum/HeadTarget" index="0"]
+
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 2 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
+
+[node name="FollowOther" type="Node" parent="Boxguy/HeadFulcrum" index="1"]
+
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+enabled = true
+physics_sync = false
+parent_bone = ""
+target_path = NodePath("../../../ViewFulcrum")
+target_bone = ""
+interpolate_speed = 0.0
+follow_x = true
+follow_y = true
+follow_z = true
+follow_rotation = true
+
+[node name="ConstrainRotation" type="Node" parent="Boxguy/HeadFulcrum" index="2"]
+
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 6 )
+}
+enabled = true
+physics_sync = false
+parent_bone = ""
+max_pitch_degrees = 80.0
+max_yaw_degrees = 110.0
+negative_z = false
+
 [node name="ViewFulcrum" type="Spatial" parent="." index="1"]
 
 transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
@@ -181,13 +239,12 @@ follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = false
-exorcist = true
 
 [node name="MouselookController" type="Node" parent="ViewFulcrum" index="1"]
 
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 __meta__ = {
-"_editor_icon": ExtResource( 6 )
+"_editor_icon": ExtResource( 8 )
 }
 enabled = true
 mouselook = false
@@ -248,65 +305,7 @@ enable_pitching = true
 negative_z = true
 exorcist = true
 
-[node name="HeadFulcrum" type="Spatial" parent="." index="2"]
-
-transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="HeadTarget" type="Spatial" parent="HeadFulcrum" index="0"]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="MeshInstance" type="MeshInstance" parent="HeadFulcrum/HeadTarget" index="0"]
-
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
-skeleton = NodePath("..")
-material/0 = null
-_sections_unfolded = [ "Transform" ]
-
-[node name="FollowOther" type="Node" parent="HeadFulcrum" index="1"]
-
-script = ExtResource( 4 )
-__meta__ = {
-"_editor_icon": ExtResource( 3 )
-}
-enabled = true
-physics_sync = false
-parent_bone = ""
-target_path = NodePath("../../ViewFulcrum")
-target_bone = ""
-interpolate_speed = 0.0
-follow_x = true
-follow_y = true
-follow_z = true
-follow_rotation = true
-exorcist = true
-
-[node name="ConstrainRotation" type="Node" parent="HeadFulcrum" index="2"]
-
-script = ExtResource( 7 )
-__meta__ = {
-"_editor_icon": ExtResource( 8 )
-}
-enabled = true
-physics_sync = false
-parent_bone = ""
-max_pitch_degrees = 80.0
-max_yaw_degrees = 110.0
-negative_z = false
-
-[node name="Camera" type="Camera" parent="." index="3"]
+[node name="Camera" type="Camera" parent="." index="2"]
 
 transform = Transform( -1, -7.50828e-09, 9.74469e-08, 0, 0.997045, 0.0768223, -9.77357e-08, 0.0768223, -0.997045, 1.26886e-06, 2.45031, -2.98228 )
 keep_aspect = 1
@@ -339,7 +338,6 @@ follow_x = true
 follow_y = true
 follow_z = true
 follow_rotation = true
-exorcist = true
 
 
 [editable path="Boxguy"]
