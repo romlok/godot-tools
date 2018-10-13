@@ -24,10 +24,10 @@ func do_process(delta):
 		# We want to prevent turning a full 360
 		var parent_vec = parent_trans.basis.z.normalized()
 		var target_vec = new_basis.z.normalized()
-		var parent_side_vec = parent_trans.basis.x.normalized()
 		var rest_basis = get_parent_global_rest_transform().basis
 		if sign(rest_basis.x.dot(parent_vec)) != sign(rest_basis.x.dot(target_vec)):
 			# The parent and target are on opposite sides of forward
+			var parent_side_vec = parent_trans.basis.x.normalized()
 			var target_dir = sign(parent_side_vec.dot(target_vec))
 			if sign(parent_side_vec.dot(rest_basis.z)) != target_dir:
 				# Forward and the target are on opposite sides of the parent
