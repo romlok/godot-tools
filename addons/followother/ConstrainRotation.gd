@@ -5,6 +5,7 @@ extends "BaseParentAffecter.gd"
 # Configuration
 export(float) var max_pitch_degrees = 0
 export(float) var max_yaw_degrees = 0
+export(bool) var negative_z = true
 # Constraints are always relative to our grandparent's orientation
 var up_vector = Vector3(0, 1, 0)
 
@@ -17,7 +18,7 @@ func do_process(delta):
 		# Constrain in the XZ plane
 		var correction = get_constraint_correction(
 			basis.z,
-			rest_basis.z,
+			rest_basis.z if negative_z else -rest_basis.z,
 			rest_basis.y.normalized(),
 			deg2rad(max_yaw_degrees)
 		)
@@ -28,7 +29,7 @@ func do_process(delta):
 		# Constrain in the YZ plane
 		var correction = get_constraint_correction(
 			basis.z,
-			rest_basis.z,
+			rest_basis.z if negative_z else -rest_basis.z,
 			basis.x.normalized(),
 			deg2rad(max_pitch_degrees)
 		)
