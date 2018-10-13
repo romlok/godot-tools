@@ -135,5 +135,6 @@ interpolate_speed = 4.0
 up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
+exorcist = true
 
 

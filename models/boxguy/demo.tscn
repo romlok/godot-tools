@@ -223,7 +223,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum" index="4"]
 
-transform = Transform( -0.99997, -7.54028e-09, 9.78622e-08, 0, 0.997045, 0.0768223, -9.81522e-08, 0.07682, -0.997015, 9.80683e-07, 0.769841, 0.0088513 )
+transform = Transform( -0.99997, -7.50806e-09, 9.7444e-08, 0, 0.997045, 0.0768223, -9.77328e-08, 0.07682, -0.997015, 9.76492e-07, 0.769841, 0.00885127 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum" index="0"]
@@ -308,7 +308,7 @@ negative_z = false
 
 [node name="Camera" type="Camera" parent="." index="3"]
 
-transform = Transform( -1, -7.54051e-09, 9.78651e-08, 0, 0.997045, 0.0768223, -9.81551e-08, 0.0768223, -0.997045, 1.27431e-06, 2.45031, -2.98228 )
+transform = Transform( -1, -7.50828e-09, 9.74469e-08, 0, 0.997045, 0.0768223, -9.77357e-08, 0.0768223, -0.997045, 1.26886e-06, 2.45031, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null

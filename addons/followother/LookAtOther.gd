@@ -28,12 +28,13 @@ func do_process(delta):
 		var rest_basis = get_parent_global_rest_transform().basis
 		if sign(rest_basis.x.dot(parent_vec)) != sign(rest_basis.x.dot(target_vec)):
 			# The parent and target are on opposite sides of forward
-			if sign(parent_side_vec.dot(rest_basis.z)) != sign(parent_side_vec.dot(target_vec)):
+			var target_dir = sign(parent_side_vec.dot(target_vec))
+			if sign(parent_side_vec.dot(rest_basis.z)) != target_dir:
 				# Forward and the target are on opposite sides of the parent
 				# Which means that we need to take the long route round
-				# Which we do by changing our target to the mid-point on the long route
-				target_point = parent_vec + target_vec + parent_trans.origin
-				new_basis = parent_trans.looking_at(target_point, up_vector).basis
+				# Which we do by rotating our target 90deg further
+				new_basis = new_basis.rotated(up_vector, PI/2 * target_dir)
+				
 		
 	if not negative_z:
 		# We want to look with our +Z axis
