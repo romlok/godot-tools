@@ -14,11 +14,14 @@ func do_process(delta):
 	var parent_trans = get_parent_global_transform()
 	var basis = parent_trans.basis
 	var rest_basis = get_parent_global_rest_transform().basis
+	if negative_z:
+		rest_basis = rest_basis.rotated(rest_basis.y, PI)
+	
 	if max_yaw_degrees > 0:
 		# Constrain in the XZ plane
 		var correction = get_constraint_correction(
 			basis.z,
-			rest_basis.z if negative_z else -rest_basis.z,
+			rest_basis.z,
 			rest_basis.y.normalized(),
 			deg2rad(max_yaw_degrees)
 		)
@@ -29,7 +32,7 @@ func do_process(delta):
 		# Constrain in the YZ plane
 		var correction = get_constraint_correction(
 			basis.z,
-			rest_basis.z if negative_z else -rest_basis.z,
+			basis.z.slide(rest_basis.y),
 			basis.x.normalized(),
 			deg2rad(max_pitch_degrees)
 		)
@@ -43,7 +46,7 @@ func get_constraint_correction(vector, rest_vector, axis_normal, max_radians):
 	# Returns the correction needed to keep the `vector` within
 	# `max_radians` around `axis_normal` of the `rest_vector`.
 	var current_angle = vector.slide(axis_normal).angle_to(
-			rest_vector.slide(axis_normal)
+		rest_vector.slide(axis_normal)
 	)
 	var extra_angle = current_angle - max_radians
 	if extra_angle <= 0:
