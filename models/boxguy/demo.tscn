@@ -37,7 +37,7 @@ _sections_unfolded = [ "Transform" ]
 
 _sections_unfolded = [ "bones", "bones/7" ]
 
-[node name="LookAtOther" type="Node" parent="Boxguy/Armature/Skeleton" index="12"]
+[node name="LookAtHeadTarget" type="Node" parent="Boxguy/Armature/Skeleton" index="12"]
 
 script = ExtResource( 2 )
 __meta__ = {
@@ -186,7 +186,7 @@ skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Transform" ]
 
-[node name="FollowOther" type="Node" parent="Boxguy/HeadFulcrum" index="1"]
+[node name="FollowViewFulcrum" type="Node" parent="Boxguy/HeadFulcrum" index="1"]
 
 script = ExtResource( 4 )
 __meta__ = {
@@ -221,7 +221,7 @@ negative_z = false
 transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="FollowOther" type="Node" parent="ViewFulcrum" index="0"]
+[node name="FollowBoxguyHead" type="Node" parent="ViewFulcrum" index="0"]
 
 script = ExtResource( 4 )
 __meta__ = {
@@ -278,7 +278,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum" index="4"]
 
-transform = Transform( -0.99997, -2.47499e-08, 3.21212e-07, 0, 0.997045, 0.0768238, -3.22164e-07, 0.0768215, -0.997015, 3.21888e-06, 0.769856, 0.00885117 )
+transform = Transform( -0.99997, -2.47498e-08, 3.21211e-07, 0, 0.997045, 0.0768238, -3.22163e-07, 0.0768215, -0.997014, 3.21888e-06, 0.769856, 0.00885117 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum" index="0"]
@@ -286,7 +286,7 @@ _sections_unfolded = [ "Transform" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="LookAtOther" type="Node" parent="ViewFulcrum/ThirdPersonFulcrum" index="1"]
+[node name="LookAtFocalPoint" type="Node" parent="ViewFulcrum/ThirdPersonFulcrum" index="1"]
 
 script = ExtResource( 2 )
 __meta__ = {
@@ -304,7 +304,7 @@ exorcist = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -2.47506e-08, 3.21221e-07, 0, 0.997045, 0.0768238, -3.22173e-07, 0.0768238, -0.997045, 4.18264e-06, 2.45033, -2.98228 )
+transform = Transform( -1, -2.47506e-08, 3.21221e-07, 0, 0.997045, 0.0768238, -3.22173e-07, 0.0768238, -0.997044, 4.18264e-06, 2.45033, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -319,7 +319,7 @@ near = 0.05
 far = 100.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="FollowOther" type="Node" parent="Camera" index="0"]
+[node name="FollowEyesOrThirdPerson" type="Node" parent="Camera" index="0"]
 
 script = ExtResource( 4 )
 __meta__ = {
