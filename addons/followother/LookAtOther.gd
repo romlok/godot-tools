@@ -2,7 +2,6 @@
 tool
 extends "BaseTargetOther.gd"
 
-export(Vector3) var up_vector = Vector3(0, 1, 0)
 export(bool) var enable_pitching = true
 export(bool) var negative_z = true
 export(bool) var exorcist = true
@@ -12,6 +11,7 @@ func do_process(delta):
 	# First work out where we're supposed to be looking
 	var parent_trans = get_parent_global_transform()
 	var target_point = get_target_global_transform().origin
+	var up_vector = get_parent_global_rest_transform().basis.y
 	if not enable_pitching:
 		# Find the equivalent point on our horizontal plane
 		target_point = target_point.slide(up_vector)

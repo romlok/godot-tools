@@ -9,7 +9,7 @@
 [ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=7]
 [ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=8]
 
-[sub_resource type="CylinderMesh" id=2]
+[sub_resource type="CylinderMesh" id=1]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.001
@@ -18,7 +18,7 @@ height = 0.5
 radial_segments = 64
 rings = 4
 
-[sub_resource type="SphereMesh" id=1]
+[sub_resource type="SphereMesh" id=2]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 radius = 0.1
@@ -31,7 +31,6 @@ is_hemisphere = false
 
 [node name="Boxguy" parent="." index="0" instance=ExtResource( 1 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Skeleton" parent="Boxguy/Armature" index="0"]
@@ -50,7 +49,6 @@ parent_bone = "Head"
 target_path = NodePath("../../../HeadFulcrum/HeadTarget")
 target_bone = ""
 interpolate_speed = 6.0
-up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
 exorcist = false
@@ -183,7 +181,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
+mesh = SubResource( 1 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Transform" ]
@@ -269,7 +267,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -280,7 +278,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum" index="4"]
 
-transform = Transform( -0.99997, -7.50806e-09, 9.7444e-08, 0, 0.997045, 0.0768223, -9.77328e-08, 0.07682, -0.997015, 9.76492e-07, 0.769841, 0.00885127 )
+transform = Transform( -0.99997, -2.47499e-08, 3.21212e-07, 0, 0.997045, 0.0768238, -3.22164e-07, 0.0768215, -0.997015, 3.21888e-06, 0.769856, 0.00885117 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum" index="0"]
@@ -300,14 +298,13 @@ parent_bone = ""
 target_path = NodePath("../../FocalPoint")
 target_bone = ""
 interpolate_speed = 0
-up_vector = Vector3( 0, 1, 0 )
 enable_pitching = true
 negative_z = true
 exorcist = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -7.50828e-09, 9.74469e-08, 0, 0.997045, 0.0768223, -9.77357e-08, 0.0768223, -0.997045, 1.26886e-06, 2.45031, -2.98228 )
+transform = Transform( -1, -2.47506e-08, 3.21221e-07, 0, 0.997045, 0.0768238, -3.22173e-07, 0.0768238, -0.997045, 4.18264e-06, 2.45033, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
