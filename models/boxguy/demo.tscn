@@ -1,13 +1,14 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/followother/LookAtOther.gd" type="Script" id=1]
 [ext_resource path="res://addons/followother/icon_tween.svg" type="Texture" id=2]
-[ext_resource path="res://models/boxguy/boxguy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/followother/FollowOther.gd" type="Script" id=4]
-[ext_resource path="res://addons/followother/ConstrainRotation.gd" type="Script" id=5]
-[ext_resource path="res://addons/followother/icon_reparent.svg" type="Texture" id=6]
-[ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=7]
-[ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=8]
+[ext_resource path="res://addons/inputcontrols/KinematicCharController.gd" type="Script" id=3]
+[ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=4]
+[ext_resource path="res://models/boxguy/boxguy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/followother/FollowOther.gd" type="Script" id=6]
+[ext_resource path="res://addons/followother/ConstrainRotation.gd" type="Script" id=7]
+[ext_resource path="res://addons/followother/icon_reparent.svg" type="Texture" id=8]
+[ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -88,16 +89,25 @@ enable_pitching = false
 negative_z = true
 exorcist = true
 
-[node name="CollisionShape" type="CollisionShape" parent="Player" index="1"]
+[node name="KinematicCharController" type="Node" parent="Player" index="1"]
+
+script = ExtResource( 3 )
+__meta__ = {
+"_editor_icon": ExtResource( 4 )
+}
+enabled = true
+move_speed = 5.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Player" index="2"]
 
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.9, 0 )
 shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
-[node name="Boxguy" parent="Player" index="2" instance=ExtResource( 3 )]
+[node name="Boxguy" parent="Player" index="3" instance=ExtResource( 5 )]
 
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Skeleton" parent="Player/Boxguy/Armature" index="0"]
@@ -228,7 +238,7 @@ data = {
 
 [node name="HeadFulcrum" type="Spatial" parent="Player/Boxguy" index="3"]
 
-transform = Transform( 1.00003, 0, -3.25851e-07, 0, 1, 0, 3.25851e-07, 0, 1.00003, 0, 1.45, 0 )
+transform = Transform( 1.00003, 0, -8.74254e-08, 0, 1, 0, 8.74254e-08, 0, 1.00003, 0, 1.44514, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="HeadTarget" type="Spatial" parent="Player/Boxguy/HeadFulcrum" index="0"]
@@ -255,7 +265,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="FollowViewFulcrum" type="Node" parent="Player/Boxguy/HeadFulcrum" index="1"]
 
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
@@ -272,9 +282,9 @@ follow_rotation = true
 
 [node name="ConstrainRotation" type="Node" parent="Player/Boxguy/HeadFulcrum" index="2"]
 
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 __meta__ = {
-"_editor_icon": ExtResource( 6 )
+"_editor_icon": ExtResource( 8 )
 }
 enabled = true
 physics_sync = false
@@ -285,19 +295,19 @@ negative_z = false
 
 [node name="ViewFulcrum" type="Spatial" parent="." index="1"]
 
-transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
+transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.44514, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="FollowBoxguyHead" type="Node" parent="ViewFulcrum" index="0"]
 
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 enabled = true
 physics_sync = false
 parent_bone = ""
-target_path = NodePath("../../KinematicBody/Boxguy/Armature/Skeleton")
+target_path = NodePath("../../Player/Boxguy/Armature/Skeleton")
 target_bone = "Head"
 interpolate_speed = 0
 follow_x = true
@@ -307,9 +317,9 @@ follow_rotation = false
 
 [node name="MouselookController" type="Node" parent="ViewFulcrum" index="1"]
 
-script = ExtResource( 7 )
+script = ExtResource( 9 )
 __meta__ = {
-"_editor_icon": ExtResource( 8 )
+"_editor_icon": ExtResource( 4 )
 }
 enabled = true
 mouselook = false
@@ -371,7 +381,7 @@ exorcist = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997044, 4.1772e-06, 2.45033, -2.98228 )
+transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997045, 4.1772e-06, 2.44546, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -388,7 +398,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="FollowEyesOrThirdPerson" type="Node" parent="Camera" index="0"]
 
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
