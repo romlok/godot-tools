@@ -10,12 +10,12 @@
 [ext_resource path="res://addons/followother/icon_reparent.svg" type="Texture" id=8]
 [ext_resource path="res://addons/inputcontrols/MouselookController.gd" type="Script" id=9]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape" id=8]
 
 radius = 0.4
 height = 1.0
 
-[sub_resource type="CylinderMesh" id=2]
+[sub_resource type="CylinderMesh" id=9]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.001
@@ -24,7 +24,7 @@ height = 0.5
 radial_segments = 64
 rings = 4
 
-[sub_resource type="SphereMesh" id=3]
+[sub_resource type="SphereMesh" id=10]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 radius = 0.1
@@ -33,18 +33,18 @@ radial_segments = 64
 rings = 32
 is_hemisphere = false
 
-[sub_resource type="PlaneShape" id=4]
+[sub_resource type="PlaneShape" id=11]
 
 plane = Plane( 0, 1, 0, 0 )
 
-[sub_resource type="PlaneMesh" id=5]
+[sub_resource type="PlaneMesh" id=12]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 128, 128 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=13]
 
 extents = Vector3( 1, 1, 1 )
 
@@ -79,7 +79,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
-enabled = true
+enabled = false
 physics_sync = true
 parent_bone = ""
 target_path = NodePath("../../ViewFulcrum/FocalPoint")
@@ -96,12 +96,13 @@ __meta__ = {
 "_editor_icon": ExtResource( 4 )
 }
 enabled = true
-move_speed = 5.0
+move_speed = 50.0
+turn_speed = 1.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Player" index="2"]
 
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.9, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 8 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
@@ -238,7 +239,7 @@ data = {
 
 [node name="HeadFulcrum" type="Spatial" parent="Player/Boxguy" index="3"]
 
-transform = Transform( 1.00003, 0, -8.74254e-08, 0, 1, 0, 8.74254e-08, 0, 1.00003, 0, 1.44514, 0 )
+transform = Transform( 1.00003, 0, -8.74254e-08, 0, 1, 0, 8.74254e-08, 0, 1.00003, 0, 1.45, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="HeadTarget" type="Spatial" parent="Player/Boxguy/HeadFulcrum" index="0"]
@@ -258,7 +259,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
+mesh = SubResource( 9 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Transform" ]
@@ -295,7 +296,7 @@ negative_z = false
 
 [node name="ViewFulcrum" type="Spatial" parent="." index="1"]
 
-transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.44514, 0 )
+transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="FollowBoxguyHead" type="Node" parent="ViewFulcrum" index="0"]
@@ -344,7 +345,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
+mesh = SubResource( 10 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -381,7 +382,7 @@ exorcist = true
 
 [node name="Camera" type="Camera" parent="." index="2"]
 
-transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997045, 4.1772e-06, 2.44546, -2.98228 )
+transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997044, 4.1772e-06, 2.45033, -2.98228 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -428,7 +429,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/Ground" index="0"]
 
-shape = SubResource( 4 )
+shape = SubResource( 11 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/Ground" index="1"]
@@ -442,7 +443,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 5 )
+mesh = SubResource( 12 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -460,7 +461,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/StaticBody" index="0"]
 
-shape = SubResource( 6 )
+shape = SubResource( 13 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/StaticBody" index="1"]
@@ -492,7 +493,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/StaticBody2" index="0"]
 
-shape = SubResource( 6 )
+shape = SubResource( 13 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/StaticBody2" index="1"]

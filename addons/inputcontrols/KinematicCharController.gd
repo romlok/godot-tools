@@ -5,7 +5,8 @@ extends Node
 var parent
 
 export(bool) var enabled = true setget set_enabled
-export(float) var move_speed = 1.0
+export(float) var move_speed = 50.0
+export(float) var turn_speed = 1.0
 
 var move_direction = Vector3()
 var turn_direction = 0.0
@@ -42,10 +43,12 @@ func _physics_process(delta):
 		var parent_basis = parent.global_transform.basis
 		var global_dir = parent_basis * move_direction.normalized()
 		parent.move_and_slide(
-			global_dir * move_speed,
+			global_dir * move_speed * delta,
 			parent_basis.y
 		)
 		
+	if turn_direction:
+		parent.rotate_y(turn_direction * turn_speed * delta)
 	
 func _unhandled_input(event):
 	# Handle button-controlled directional movement
@@ -60,4 +63,10 @@ func _unhandled_input(event):
 		get_tree().set_input_as_handled()
 		return
 		
+	# And rotation
+	if event.is_action("turn_left") or event.is_action("turn_right"):
+		turn_direction = int(Input.is_action_pressed("turn_left"))
+		turn_direction -= int(Input.is_action_pressed("turn_right"))
+		get_tree().set_input_as_handled()
+		return
 	
