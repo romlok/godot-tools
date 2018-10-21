@@ -14,9 +14,14 @@ func _enter_tree():
 		"KinematicCharController", "Node",
 		preload("KinematicCharController.gd"), preload("icon_mouse.svg")
 	)
+	add_custom_type(
+		"RigidCharController", "Node",
+		preload("RigidCharController.gd"), preload("icon_mouse.svg")
+	)
 	
 func _exit_tree():
 	remove_custom_type("MouselookController")
 	remove_custom_type("PanController")
 	remove_custom_type("KinematicCharController")
+	remove_custom_type("RigidCharController")
 	
