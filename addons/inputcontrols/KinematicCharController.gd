@@ -5,8 +5,9 @@ extends Node
 var parent
 
 export(bool) var enabled = true setget set_enabled
-export(float) var move_speed = 50.0
+export(float) var move_speed = 200.0
 export(float) var turn_speed = 1.0
+export(bool) var negative_z = true
 
 var move_direction = Vector3()
 var turn_direction = 0.0
@@ -53,13 +54,17 @@ func _physics_process(delta):
 func _unhandled_input(event):
 	# Handle button-controlled directional movement
 	if event.is_action("move_forward") or event.is_action("move_back"):
-		move_direction.z = int(Input.is_action_pressed("move_back"))
-		move_direction.z -= int(Input.is_action_pressed("move_forward"))
+		move_direction.z = int(Input.is_action_pressed("move_forward"))
+		move_direction.z -= int(Input.is_action_pressed("move_back"))
+		if negative_z:
+			move_direction.z *= -1
 		get_tree().set_input_as_handled()
 		return
 	if event.is_action("move_left") or event.is_action("move_right"):
-		move_direction.x = int(Input.is_action_pressed("move_right"))
-		move_direction.x -= int(Input.is_action_pressed("move_left"))
+		move_direction.x = int(Input.is_action_pressed("move_left"))
+		move_direction.x -= int(Input.is_action_pressed("move_right"))
+		if negative_z:
+			move_direction.x *= -1
 		get_tree().set_input_as_handled()
 		return
 		
