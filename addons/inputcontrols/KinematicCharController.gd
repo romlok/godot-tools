@@ -23,6 +23,7 @@ var used_actions = [
 func set_enabled(val):
 	enabled = val
 	set_process_unhandled_input(val)
+	set_physics_process(val)
 	
 
 func _ready():
