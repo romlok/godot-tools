@@ -263,7 +263,8 @@ forward_force = 20.0
 back_force = 20.0
 left_force = 20.0
 right_force = 20.0
-turn_force = 5.0
 negative_z = false
+turn_force = 5.0
+immediate_rotation = true
 
 

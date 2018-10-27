@@ -9,8 +9,11 @@ export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
 export(float) var right_force = 20.0
-export(float) var turn_force = 5.0
 export(bool) var negative_z = true
+export(float) var turn_force = 5.0
+# "Immediate rotation" sets linear_velocity directly,
+# rather than applying a torque force.
+export(bool) var immediate_rotation = false
 
 var move_direction = Vector3()
 var turn_direction = 0.0
@@ -59,7 +62,12 @@ func _physics_process(delta):
 		
 		parent.apply_impulse(Vector3(0, 0, 0), move_force * delta)
 		
-	if turn_direction:
+	if immediate_rotation:
+		# Rotate by changing the linear velocity directly
+		var velocity = (turn_force / PI) * turn_direction
+		parent.angular_velocity = Vector3(0, velocity, 0)
+		
+	elif turn_direction:
 		# We apply two equal-but-opposite forces to the sides
 		# so that the net force is (in theory) pure torque
 		## TODO: We can use apply_torque_impulse in 3.1
