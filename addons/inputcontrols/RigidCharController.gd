@@ -9,7 +9,7 @@ export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
 export(float) var right_force = 20.0
-export(float) var turn_force = 2.0
+export(float) var turn_force = 5.0
 export(bool) var negative_z = true
 
 var move_direction = Vector3()
