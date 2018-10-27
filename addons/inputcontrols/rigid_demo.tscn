@@ -3,27 +3,15 @@
 [ext_resource path="res://addons/inputcontrols/RigidCharController.gd" type="Script" id=1]
 [ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=2]
 
-[sub_resource type="PlaneShape" id=5]
+[sub_resource type="PlaneShape" id=1]
 
 plane = Plane( 0, 1, 0, 0 )
 
-[sub_resource type="PlaneMesh" id=6]
+[sub_resource type="PlaneMesh" id=2]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 128, 128 )
 subdivide_width = 0
-subdivide_depth = 0
-
-[sub_resource type="BoxShape" id=1]
-
-extents = Vector3( 1, 1, 1 )
-
-[sub_resource type="CubeMesh" id=2]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector3( 2, 2, 2 )
-subdivide_width = 0
-subdivide_height = 0
 subdivide_depth = 0
 
 [sub_resource type="BoxShape" id=3]
@@ -31,6 +19,18 @@ subdivide_depth = 0
 extents = Vector3( 1, 1, 1 )
 
 [sub_resource type="CubeMesh" id=4]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector3( 2, 2, 2 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
+
+[sub_resource type="BoxShape" id=5]
+
+extents = Vector3( 1, 1, 1 )
+
+[sub_resource type="CubeMesh" id=6]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector3( 2, 2, 2 )
@@ -83,7 +83,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/Ground" index="0"]
 
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/Ground" index="1"]
@@ -97,7 +97,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 6 )
+mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -115,7 +115,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/StaticBody" index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/StaticBody" index="1"]
@@ -129,7 +129,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
+mesh = SubResource( 4 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -147,7 +147,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Terrain/StaticBody2" index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/StaticBody2" index="1"]
@@ -161,7 +161,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
+mesh = SubResource( 4 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -197,7 +197,7 @@ angular_damp = -1.0
 [node name="CollisionShape" type="CollisionShape" parent="Player" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
@@ -213,7 +213,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 4 )
+mesh = SubResource( 6 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -245,6 +245,7 @@ forward_force = 20.0
 back_force = 20.0
 left_force = 20.0
 right_force = 20.0
+turn_force = 2.0
 negative_z = false
 
 

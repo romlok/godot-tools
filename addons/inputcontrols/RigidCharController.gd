@@ -9,6 +9,7 @@ export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
 export(float) var right_force = 20.0
+export(float) var turn_force = 2.0
 export(bool) var negative_z = true
 
 var move_direction = Vector3()
@@ -59,7 +60,14 @@ func _physics_process(delta):
 		parent.apply_impulse(Vector3(0, 0, 0), move_force * delta)
 		
 	if turn_direction:
-		pass
+		# We apply two equal-but-opposite forces to the sides
+		# so that the net force is (in theory) pure torque
+		## TODO: We can use apply_torque_impulse in 3.1
+		var offset = Vector3(1, 0, 0) * turn_direction
+		var torque_force = Vector3(0, 0, -1) * turn_force / 2
+		parent.apply_impulse(offset, torque_force * delta)
+		parent.apply_impulse(-offset, -torque_force * delta)
+		
 	
 
 func _unhandled_input(event):
