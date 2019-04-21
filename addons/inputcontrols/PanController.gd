@@ -57,8 +57,13 @@ func _process(delta):
 	# Move the parent as needed
 	if pan_speed > 0 and pan_direction.length_squared():
 		# Work out the relative direction on the ground plane
-		var parent_dir = parent.transform.basis * pan_direction
-		var plane_dir = parent_dir.slide(pan_normal).normalized()
+		var plane_z = parent.transform.basis.z.slide(pan_normal).normalized()
+		var parent_yaw = Basis(
+			plane_z.cross(pan_normal),
+			pan_normal,
+			plane_z
+		)
+		var plane_dir = (parent_yaw * pan_direction).normalized()
 		parent.global_translate(plane_dir * pan_speed * delta)
 		
 	
@@ -89,8 +94,8 @@ func _unhandled_input(event):
 		get_tree().set_input_as_handled()
 		return
 	if event.is_action("pan_left") or event.is_action("pan_right"):
-		pan_direction.x = int(Input.is_action_pressed("pan_right"))
-		pan_direction.x -= int(Input.is_action_pressed("pan_left"))
+		pan_direction.x = int(Input.is_action_pressed("pan_left"))
+		pan_direction.x -= int(Input.is_action_pressed("pan_right"))
 		get_tree().set_input_as_handled()
 		return
 		
