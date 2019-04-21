@@ -1,6 +1,7 @@
 # Base script for nodes which alter the parent in response to a target
 tool
 extends "BaseParentAffecter.gd"
+#warning-ignore-all:unused_class_variable
 
 # Configuration
 export(NodePath) var target_path setget set_target_path

@@ -83,7 +83,7 @@ func is_config_valid():
 			return false
 	return true
 	
-func do_process(delta):
+func do_process(_delta):
 	# To be overridden
 	pass
 	

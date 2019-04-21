@@ -24,7 +24,7 @@ func mirror_position(delta):
 	# Work out he actual point we're to follow
 	var parent_trans = get_parent_global_transform()
 	var parent_pos = parent_trans.origin
-	var target_pos = Vector3(get_target_global_transform().origin)
+	var target_pos = get_target_global_transform().origin
 	if not follow_x:
 		target_pos.x = parent_pos.x
 	if not follow_y:

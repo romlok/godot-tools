@@ -6,121 +6,39 @@
 
 [sub_resource type="CubeMesh" id=1]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector3( 2, 2, 2 )
-subdivide_width = 0
-subdivide_height = 0
-subdivide_depth = 0
-
 [sub_resource type="CubeMesh" id=2]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector3( 1, 1, 1 )
-subdivide_width = 0
-subdivide_height = 0
-subdivide_depth = 0
 
 [node name="Spatial" type="Spatial"]
 
-[node name="MoveMe" type="RigidBody" parent="." index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-mode = 0
-mass = 1.0
-friction = 1.0
-bounce = 0.0
+[node name="MoveMe" type="RigidBody" parent="."]
 gravity_scale = 0.0
-custom_integrator = false
-continuous_cd = false
-contacts_reported = 0
-contact_monitor = false
-sleeping = false
-can_sleep = true
-axis_lock_linear_x = false
-axis_lock_linear_y = false
-axis_lock_linear_z = false
-axis_lock_angular_x = false
-axis_lock_angular_y = false
-axis_lock_angular_z = false
-linear_velocity = Vector3( 0, 0, 0 )
-linear_damp = -1.0
 angular_velocity = Vector3( 0, 2, 0 )
-angular_damp = -1.0
-_sections_unfolded = [ "Angular", "Transform" ]
 
-[node name="MeshInstance" type="MeshInstance" parent="MoveMe" index="0"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
+[node name="MeshInstance" type="MeshInstance" parent="MoveMe"]
 mesh = SubResource( 1 )
-skeleton = NodePath("..")
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="Spatial" type="Spatial" parent="." index="1"]
+[node name="Spatial" type="Spatial" parent="."]
 
-[node name="MeshInstance" type="MeshInstance" parent="Spatial" index="0"]
-
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 1.5 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
 mesh = SubResource( 2 )
-skeleton = NodePath("..")
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="FollowOther" type="Node" parent="Spatial" index="1"]
-
+[node name="FollowOther" type="Node" parent="Spatial"]
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../MoveMe")
-target_bone = ""
 interpolate_speed = 8.0
-follow_x = true
-follow_y = true
-follow_z = true
-follow_rotation = true
 
-[node name="Camera" type="Camera" parent="." index="2"]
-
+[node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.857493, -0.23538, -0.457496, 0, 0.889212, -0.457496, 0.514496, 0.392299, 0.762493, 0, 0, 4 )
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
-current = false
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
 
-[node name="LookAtOther" type="Node" parent="Camera" index="0"]
-
+[node name="LookAtOther" type="Node" parent="Camera"]
 script = ExtResource( 3 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
@@ -134,5 +52,4 @@ interpolate_speed = 4.0
 enable_pitching = true
 negative_z = true
 exorcist = true
-
 
