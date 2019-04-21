@@ -1,6 +1,7 @@
 # Node which keeps its parent facing within certain bounds
 tool
 extends "BaseParentAffecter.gd"
+#warning-ignore-all:unused_class_variable
 
 # Configuration
 export(float) var max_pitch_degrees = 0
@@ -10,7 +11,7 @@ export(bool) var negative_z = true
 var up_vector = Vector3(0, 1, 0)
 
 
-func do_process(delta):
+func do_process(_delta):
 	var parent_trans = get_parent_global_transform()
 	var basis = parent_trans.basis
 	var rest_basis = get_parent_global_rest_transform().basis
