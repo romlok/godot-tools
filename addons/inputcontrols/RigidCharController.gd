@@ -5,6 +5,9 @@ extends Node
 var parent
 
 export(bool) var enabled = true setget set_enabled
+# The orientation_node can be used to override which node is used to orient
+# the directions of force. If not specified, this uses the parent node.
+export(NodePath) var orientation_node
 export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
@@ -32,6 +35,13 @@ func set_enabled(val):
 	set_physics_process(val)
 	
 
+func get_global_basis():
+	var node = parent
+	if orientation_node:
+		node = get_node(orientation_node)
+	return node.global_transform.basis
+	
+
 func _ready():
 	set_enabled(enabled)
 	# Make sure all the actions we expect exist,
@@ -47,7 +57,7 @@ func _enter_tree():
 func _physics_process(delta):
 	# Move the parent as needed
 	if move_direction.length_squared():
-		var parent_basis = parent.global_transform.basis
+		var global_basis = get_global_basis()
 		# Calculate the appropriate force
 		var x_force = move_direction.dot(Vector3(1, 0, 0))
 		x_force *= left_force if x_force > 0 else right_force
@@ -55,10 +65,10 @@ func _physics_process(delta):
 		z_force *= forward_force if z_force > 0 else back_force
 		
 		# Apply our force in the global space
-		var global_dir = parent_basis * move_direction
+		var global_dir = global_basis * move_direction
 		var move_force = global_dir * (abs(x_force) + abs(z_force))
 		if negative_z:
-			move_force = move_force.rotated(parent_basis.y, PI)
+			move_force = move_force.rotated(global_basis.y, PI)
 		
 		parent.apply_impulse(Vector3(0, 0, 0), move_force * delta)
 		
