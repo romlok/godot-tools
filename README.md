@@ -21,8 +21,12 @@ MouselookController and PanController can be added as children of a Spatial
 node, and will alter the parent node's transform in response to mouse/input
 events.
 
+RigidCharController and KinematicCharController can be added as children of
+nodes of the respective type, and will enable their parent to be transformed
+in response to input events.
+
 Note that, in line with camera orientation, "forward" for such controlled
-nodes is considered to be the *negative* Z axis.
+nodes is by default considered to be the *negative* Z axis.
 
 
 ## Gfx
