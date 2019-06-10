@@ -2,6 +2,8 @@
 
 This is a selection of reusable chunks from some of my projects.
 
+Released under the BSD 0-Clause License (0BSD). Have at.
+
 ## Addons/Plugins
 
 Each plugin tries to focus on doing just one thing, so allowing the developer
