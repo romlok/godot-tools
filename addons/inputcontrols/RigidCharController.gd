@@ -5,9 +5,6 @@ extends Node
 var parent
 
 export(bool) var enabled = true setget set_enabled
-# The orientation_node can be used to override which node is used to orient
-# the directions of force. If not specified, this uses the parent node.
-export(NodePath) var orientation_node
 export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
@@ -17,6 +14,11 @@ export(float) var turn_force = 5.0
 # "Immediate rotation" sets linear_velocity directly,
 # rather than applying a torque force.
 export(bool) var immediate_rotation = false
+
+# The orientation_node can be used to override which node is used to orient
+# the directions of force. If not specified, this uses the parent node.
+export(NodePath) var orientation_node_path setget set_orientation_node_path
+var orientation_node setget set_orientation_node
 
 var move_direction = Vector3()
 var turn_direction = 0.0
@@ -34,16 +36,27 @@ func set_enabled(val):
 	set_process_unhandled_input(val)
 	set_physics_process(val)
 	
+func set_orientation_node_path(val):
+	orientation_node_path = val
+	if is_inside_tree():
+		orientation_node = get_node(orientation_node_path)
+	
+func set_orientation_node(val):
+	orientation_node = val
+	orientation_node_path = val.get_path()
+	
 
 func get_global_basis():
-	var node = parent
-	if orientation_node:
-		node = get_node(orientation_node)
+	var node = orientation_node
+	if not "global_transform" in node:
+		node = parent
 	return node.global_transform.basis
 	
 
 func _ready():
+	# (Re)Apply exported values
 	set_enabled(enabled)
+	set_orientation_node_path(orientation_node_path)
 	# Make sure all the actions we expect exist,
 	# so we don't spew errors for unused functionality
 	for action in used_actions:
