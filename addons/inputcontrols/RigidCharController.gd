@@ -5,6 +5,7 @@ extends Node
 var parent
 
 export(bool) var enabled = true setget set_enabled
+export(bool) var consume_events = true
 export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
@@ -120,15 +121,18 @@ func _unhandled_input(event):
 	if event.is_action("move_forward") or event.is_action("move_back"):
 		move_direction.z = int(Input.is_action_pressed("move_forward"))
 		move_direction.z -= int(Input.is_action_pressed("move_back"))
-		get_tree().set_input_as_handled()
+		if consume_events:
+			get_tree().set_input_as_handled()
 	if event.is_action("move_left") or event.is_action("move_right"):
 		move_direction.x = int(Input.is_action_pressed("move_left"))
 		move_direction.x -= int(Input.is_action_pressed("move_right"))
-		get_tree().set_input_as_handled()
+		if consume_events:
+			get_tree().set_input_as_handled()
 	if event.is_action("move_up") or event.is_action("move_down"):
 		move_direction.y = int(Input.is_action_pressed("move_up"))
 		move_direction.y -= int(Input.is_action_pressed("move_down"))
-		get_tree().set_input_as_handled()
+		if consume_events:
+			get_tree().set_input_as_handled()
 	# Prevent strafe-running
 	move_direction = move_direction.normalized()
 	
@@ -136,11 +140,13 @@ func _unhandled_input(event):
 	if event.is_action("yaw_left") or event.is_action("yaw_right"):
 		yaw_direction = int(Input.is_action_pressed("yaw_left"))
 		yaw_direction -= int(Input.is_action_pressed("yaw_right"))
-		get_tree().set_input_as_handled()
+		if consume_events:
+			get_tree().set_input_as_handled()
 		return
 	if event.is_action("roll_left") or event.is_action("roll_right"):
 		roll_direction = int(Input.is_action_pressed("roll_left"))
 		roll_direction -= int(Input.is_action_pressed("roll_right"))
-		get_tree().set_input_as_handled()
+		if consume_events:
+			get_tree().set_input_as_handled()
 		return
 	
