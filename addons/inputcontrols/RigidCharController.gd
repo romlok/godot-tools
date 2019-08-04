@@ -10,7 +10,8 @@ export(float) var back_force = 20.0
 export(float) var left_force = 20.0
 export(float) var right_force = 20.0
 export(bool) var negative_z = true
-export(float) var turn_force = 5.0
+export(float) var yaw_force = 5.0
+export(float) var roll_force = 5.0
 # "Immediate rotation" sets linear_velocity directly,
 # rather than applying a torque force.
 export(bool) var immediate_rotation = false
@@ -21,14 +22,17 @@ export(NodePath) var orientation_node_path setget set_orientation_node_path
 var orientation_node setget set_orientation_node
 
 var move_direction = Vector3()
-var turn_direction = 0.0
+var yaw_direction = 0
+var roll_direction = 0
 var used_actions = [
 	"move_forward",
 	"move_back",
 	"move_left",
 	"move_right",
-	"turn_left",
-	"turn_right",
+	"yaw_left",
+	"yaw_right",
+	"roll_left",
+	"roll_right",
 ]
 
 func set_enabled(val):
@@ -69,8 +73,8 @@ func _enter_tree():
 
 func _physics_process(delta):
 	# Move the parent as needed
+	var global_basis = get_global_basis()
 	if move_direction.length_squared():
-		var global_basis = get_global_basis()
 		# Calculate the appropriate force
 		var x_force = move_direction.dot(Vector3(1, 0, 0))
 		x_force *= left_force if x_force > 0 else right_force
@@ -87,18 +91,22 @@ func _physics_process(delta):
 		
 	if immediate_rotation:
 		# Rotate by changing the linear velocity directly
-		var velocity = (turn_force / PI) * turn_direction
-		parent.angular_velocity = Vector3(0, velocity, 0)
+		var yaw = (yaw_force / PI) * yaw_direction
+		var roll = (roll_force / PI) * roll_direction
+		parent.angular_velocity = Vector3(0, yaw, roll)
 		
-	elif turn_direction:
+	elif yaw_direction or roll_direction:
 		# We apply two equal-but-opposite forces to the sides
 		# so that the net force is (in theory) pure torque
 		## TODO: We can use apply_torque_impulse in 3.1
-		var offset = Vector3(1, 0, 0) * turn_direction
-		var torque_force = Vector3(0, 0, -1) * turn_force / 2
+		var offset = global_basis * Vector3(1, 0, 0)
+		var torque_force = global_basis * Vector3(
+			0,
+			roll_force * roll_direction / 2,
+			-yaw_force * yaw_direction / 2
+		)
 		parent.apply_impulse(offset, torque_force * delta)
 		parent.apply_impulse(-offset, -torque_force * delta)
-		
 	
 
 func _unhandled_input(event):
@@ -115,9 +123,14 @@ func _unhandled_input(event):
 	move_direction = move_direction.normalized()
 	
 	# And rotation
-	if event.is_action("turn_left") or event.is_action("turn_right"):
-		turn_direction = int(Input.is_action_pressed("turn_left"))
-		turn_direction -= int(Input.is_action_pressed("turn_right"))
+	if event.is_action("yaw_left") or event.is_action("yaw_right"):
+		yaw_direction = int(Input.is_action_pressed("yaw_left"))
+		yaw_direction -= int(Input.is_action_pressed("yaw_right"))
+		get_tree().set_input_as_handled()
+		return
+	if event.is_action("roll_left") or event.is_action("roll_right"):
+		roll_direction = int(Input.is_action_pressed("roll_left"))
+		roll_direction -= int(Input.is_action_pressed("roll_right"))
 		get_tree().set_input_as_handled()
 		return
 	
