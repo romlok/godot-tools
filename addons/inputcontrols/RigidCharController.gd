@@ -9,6 +9,8 @@ export(float) var forward_force = 20.0
 export(float) var back_force = 20.0
 export(float) var left_force = 20.0
 export(float) var right_force = 20.0
+export(float) var up_force = 20.0
+export(float) var down_force = 20.0
 export(bool) var negative_z = true
 export(float) var yaw_force = 5.0
 export(float) var roll_force = 5.0
@@ -29,6 +31,8 @@ var used_actions = [
 	"move_back",
 	"move_left",
 	"move_right",
+	"move_up",
+	"move_down",
 	"yaw_left",
 	"yaw_right",
 	"roll_left",
@@ -78,12 +82,14 @@ func _physics_process(delta):
 		# Calculate the appropriate force
 		var x_force = move_direction.dot(Vector3(1, 0, 0))
 		x_force *= left_force if x_force > 0 else right_force
+		var y_force = move_direction.dot(Vector3(0, 1, 0))
+		y_force *= up_force if y_force > 0 else down_force
 		var z_force = move_direction.dot(Vector3(0, 0, 1))
 		z_force *= forward_force if z_force > 0 else back_force
 		
 		# Apply our force in the global space
 		var global_dir = global_basis * move_direction
-		var move_force = global_dir * (abs(x_force) + abs(z_force))
+		var move_force = global_dir * (abs(x_force) + abs(y_force) + abs(z_force))
 		if negative_z:
 			move_force = move_force.rotated(global_basis.y, PI)
 		
@@ -118,6 +124,10 @@ func _unhandled_input(event):
 	if event.is_action("move_left") or event.is_action("move_right"):
 		move_direction.x = int(Input.is_action_pressed("move_left"))
 		move_direction.x -= int(Input.is_action_pressed("move_right"))
+		get_tree().set_input_as_handled()
+	if event.is_action("move_up") or event.is_action("move_down"):
+		move_direction.y = int(Input.is_action_pressed("move_up"))
+		move_direction.y -= int(Input.is_action_pressed("move_down"))
 		get_tree().set_input_as_handled()
 	# Prevent strafe-running
 	move_direction = move_direction.normalized()
