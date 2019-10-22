@@ -41,8 +41,8 @@ func do_process(delta):
 		new_basis = new_basis.rotated(new_basis.y, PI)
 	
 	# Now make the parent actually look at the target
-	var parent_quat = Quat(parent_trans.basis)
-	var target_quat = Quat(new_basis)
+	var parent_quat = parent_trans.basis.get_rotation_quat()
+	var target_quat = new_basis.get_rotation_quat()
 	var diff = (parent_quat + -target_quat).length_squared()
 	if interpolate_speed > 0.001 and diff > 0.000001:
 		parent_trans.basis = Basis(

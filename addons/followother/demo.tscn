@@ -44,12 +44,5 @@ __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../Spatial/MeshInstance")
-target_bone = ""
 interpolate_speed = 4.0
-enable_pitching = true
-negative_z = true
-exorcist = true
-

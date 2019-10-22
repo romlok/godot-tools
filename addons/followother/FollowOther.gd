@@ -46,8 +46,8 @@ func mirror_position(delta):
 func mirror_rotation(delta):
 	var parent_trans = get_parent_global_transform()
 	var target_trans = get_target_global_transform()
-	var our_quat = Quat(parent_trans.basis)
-	var target_quat = Quat(target_trans.basis)
+	var our_quat = parent_trans.basis.get_rotation_quat()
+	var target_quat = target_trans.basis.get_rotation_quat()
 	var diff = (our_quat + -target_quat).length_squared()
 	if interpolate_speed > 0.001 and diff > 0.000001:
 		parent_trans.basis = Basis(

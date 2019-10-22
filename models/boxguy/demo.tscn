@@ -10,52 +10,31 @@
 [ext_resource path="res://addons/inputcontrols/icon_mouse.svg" type="Texture" id=8]
 
 [sub_resource type="CylinderMesh" id=1]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.001
 bottom_radius = 0.05
 height = 0.5
-radial_segments = 64
-rings = 4
 
 [sub_resource type="SphereMesh" id=2]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 radius = 0.1
 height = 0.2
-radial_segments = 64
-rings = 32
-is_hemisphere = false
 
 [node name="DemoScene" type="Spatial"]
 
-[node name="Boxguy" parent="." index="0" instance=ExtResource( 1 )]
-
+[node name="Boxguy" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, 1, 0, 0, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Skeleton" parent="Boxguy/Armature" index="0"]
-
-_sections_unfolded = [ "bones", "bones/7" ]
 
 [node name="LookAtHeadTarget" type="Node" parent="Boxguy/Armature/Skeleton" index="12"]
-
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 enabled = true
-physics_sync = false
 parent_bone = "Head"
 target_path = NodePath("../../../HeadFulcrum/HeadTarget")
-target_bone = ""
 interpolate_speed = 6.0
-enable_pitching = true
-negative_z = true
 exorcist = false
 
 [node name="AnimationTreePlayer" parent="Boxguy" index="2"]
-
 data = {
 "active": true,
 "connections": [ "holistic joiner", "out", 0, "punch", "holistic joiner", 0, "leg stance", "holistic joiner", 1, "walk direction", "walk speed", 0, "sidestep anim", "sidestep sync", 0, "walk anim", "walk direction", 0, "sidestep sync", "walk direction", 1, "arm stance", "punch", 0, "punch speed", "punch", 1, "stand anim", "leg stance", 0, "walk speed", "leg stance", 1, "jab right", "punch speed", 0, "idle", "arm stance", 0, "guarded", "arm stance", 1 ],
@@ -71,11 +50,10 @@ data = {
 "position": Vector2( 1084, 96 ),
 "type": "output"
 }, {
-"filter": [  ],
-"from": "h2h_jab_r",
-"id": "jab right",
-"position": Vector2( 181, 246 ),
-"type": "animation"
+"id": "holistic joiner",
+"mix": 1.0,
+"position": Vector2( 924, 177 ),
+"type": "mix"
 }, {
 "filter": [  ],
 "from": "walk-loop",
@@ -83,10 +61,11 @@ data = {
 "position": Vector2( 203, 475 ),
 "type": "animation"
 }, {
-"id": "holistic joiner",
-"mix": 1.0,
-"position": Vector2( 924, 177 ),
-"type": "mix"
+"filter": [  ],
+"from": "h2h_jab_r",
+"id": "jab right",
+"position": Vector2( 181, 246 ),
+"type": "animation"
 }, {
 "filter": [  ],
 "from": "h2h_stance",
@@ -121,7 +100,7 @@ data = {
 "autorestart_random_delay": 0.999981,
 "fade_in": 0.2,
 "fade_out": 0.2,
-"filter": [ NodePath("Armature/Skeleton:Hand.L"), NodePath("Armature/Skeleton:Shoulder.L"), NodePath("Armature/Skeleton:Elbow.L") ],
+"filter": [ NodePath("Armature/Skeleton:Shoulder.L"), NodePath("Armature/Skeleton:Elbow.L"), NodePath("Armature/Skeleton:Hand.L") ],
 "id": "punch",
 "mix": false,
 "position": Vector2( 645, 114 ),
@@ -160,182 +139,89 @@ data = {
 } ]
 }
 
-[node name="HeadFulcrum" type="Spatial" parent="Boxguy" index="3"]
-
+[node name="HeadFulcrum" type="Spatial" parent="Boxguy"]
 transform = Transform( 1.00003, 0, -8.74254e-08, 0, 1, 0, 8.74254e-08, 0, 1.00003, 0, 1.45, 0 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="HeadTarget" type="Spatial" parent="Boxguy/HeadFulcrum" index="0"]
-
+[node name="HeadTarget" type="Spatial" parent="Boxguy/HeadFulcrum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="MeshInstance" type="MeshInstance" parent="Boxguy/HeadFulcrum/HeadTarget" index="0"]
-
+[node name="MeshInstance" type="MeshInstance" parent="Boxguy/HeadFulcrum/HeadTarget"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
 mesh = SubResource( 1 )
-skeleton = NodePath("..")
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="FollowViewFulcrum" type="Node" parent="Boxguy/HeadFulcrum" index="1"]
-
+[node name="FollowViewFulcrum" type="Node" parent="Boxguy/HeadFulcrum"]
 script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../../ViewFulcrum")
-target_bone = ""
-interpolate_speed = 0.0
-follow_x = true
-follow_y = true
-follow_z = true
-follow_rotation = true
 
-[node name="ConstrainRotation" type="Node" parent="Boxguy/HeadFulcrum" index="2"]
-
+[node name="ConstrainRotation" type="Node" parent="Boxguy/HeadFulcrum"]
 script = ExtResource( 5 )
 __meta__ = {
 "_editor_icon": ExtResource( 6 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 max_pitch_degrees = 80.0
 max_yaw_degrees = 110.0
 negative_z = false
 
-[node name="ViewFulcrum" type="Spatial" parent="." index="1"]
-
+[node name="ViewFulcrum" type="Spatial" parent="."]
 transform = Transform( 1.00003, 0, 0, 0, 1, 0, 0, 0, 1.00003, 0, 1.45, 0 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="FollowBoxguyHead" type="Node" parent="ViewFulcrum" index="0"]
-
+[node name="FollowBoxguyHead" type="Node" parent="ViewFulcrum"]
 script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../Boxguy/Armature/Skeleton")
 target_bone = "Head"
-interpolate_speed = 0
-follow_x = true
-follow_y = true
-follow_z = true
 follow_rotation = false
 
-[node name="MouselookController" type="Node" parent="ViewFulcrum" index="1"]
-
+[node name="MouselookController" type="Node" parent="ViewFulcrum"]
 script = ExtResource( 7 )
 __meta__ = {
 "_editor_icon": ExtResource( 8 )
 }
-enabled = true
-mouselook = false
 mouselook_scale = Vector2( 1, -1 )
-mouselook_hold_timeout = 0.3
-min_pitch = -89.9
 max_pitch = 85.0
 
-[node name="FocalPoint" type="Spatial" parent="ViewFulcrum" index="2"]
-
+[node name="FocalPoint" type="Spatial" parent="ViewFulcrum"]
 transform = Transform( 1, 0, 3.18323e-12, 0, 1, 0, -3.18323e-12, 0, 1, 0, 0, 10 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="MeshInstance" type="MeshInstance" parent="ViewFulcrum/FocalPoint" index="0"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
+[node name="MeshInstance" type="MeshInstance" parent="ViewFulcrum/FocalPoint"]
 mesh = SubResource( 2 )
-skeleton = NodePath("..")
 material/0 = null
 
-[node name="Eyes" type="Spatial" parent="ViewFulcrum" index="3"]
-
+[node name="Eyes" type="Spatial" parent="ViewFulcrum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.15 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum" index="4"]
+[node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum"]
+transform = Transform( -0.99997, -2.47176e-08, 3.20793e-07, 0, 0.997045, 0.0768238, -3.21744e-07, 0.0768215, -0.997015, 3.21469e-06, 0.769856, 0.00885118 )
 
-transform = Transform( -0.99997, -2.47176e-08, 3.20793e-07, 0, 0.997045, 0.0768238, -3.21744e-07, 0.0768215, -0.997014, 3.21469e-06, 0.769856, 0.00885118 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum" index="0"]
-
+[node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="LookAtFocalPoint" type="Node" parent="ViewFulcrum/ThirdPersonFulcrum" index="1"]
-
+[node name="LookAtFocalPoint" type="Node" parent="ViewFulcrum/ThirdPersonFulcrum"]
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../FocalPoint")
-target_bone = ""
-interpolate_speed = 0
-enable_pitching = true
-negative_z = true
-exorcist = true
 
-[node name="Camera" type="Camera" parent="." index="2"]
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997045, 4.1772e-06, 2.45033, -2.98228 )
 
-transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997044, 4.1772e-06, 2.45033, -2.98228 )
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
-current = false
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
-_sections_unfolded = [ "Transform" ]
-
-[node name="FollowEyesOrThirdPerson" type="Node" parent="Camera" index="0"]
-
+[node name="FollowEyesOrThirdPerson" type="Node" parent="Camera"]
 script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 enabled = true
-physics_sync = false
-parent_bone = ""
 target_path = NodePath("../../ViewFulcrum/ThirdPersonFulcrum/ThirdPerson")
-target_bone = ""
-interpolate_speed = 0
-follow_x = true
-follow_y = true
-follow_z = true
-follow_rotation = true
-
 
 [editable path="Boxguy"]
