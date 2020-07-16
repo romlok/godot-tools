@@ -6,6 +6,9 @@ var parent
 
 export(bool) var enabled = true setget set_enabled
 
+export(float) var tween_time = 0.1
+var tween:Tween
+
 # Zooming by moving closer or further away
 export(bool) var change_translation = true
 export(float) var translation_min = 1
@@ -14,6 +17,7 @@ export(float) var translation_max = 100
 export(float) var translation_speed = 10
 # Step is applied to discrete zoom changes (eg. mousewheel "clicks")
 export(float) var translation_step = 5
+# The axis which defines the direction of zooming in
 export(Vector3) var translation_axis = Vector3(0, 0, -1)
 
 # Zooming using camera FOV changes
@@ -22,9 +26,6 @@ export(float) var fov_min = 10
 export(float) var fov_max = 120
 export(float) var fov_speed = 10
 export(float) var fov_step = 5
-
-export(float) var tween_time = 0.1
-var tween:Tween
 
 # For continuous zoom, we track how fast we're zooming in or out
 var zooming_speed = 0
@@ -121,11 +122,11 @@ func interpolate_fov(fov):
 
 
 func bound_translation(translation:Vector3):
-	var distance = translation.length_squared()
+	var distance = -translation_axis.dot(translation)
 	# Possible strangenes if translation_axis isn't normalised
-	if distance < pow(translation_min, 2):
+	if distance < translation_min:
 		return -translation_axis * translation_min
-	elif distance > pow(translation_max, 2):
+	elif distance > translation_max:
 		return -translation_axis * translation_max
 	return translation
 
