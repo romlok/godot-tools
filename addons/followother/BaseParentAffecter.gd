@@ -106,7 +106,7 @@ func set_parent_global_transform(trans):
 	if parent_bone:
 		var bone_id = parent.find_bone(parent_bone)
 		var rel_trans = parent.global_transform.inverse() * trans
-		parent.set_bone_global_pose(bone_id, rel_trans)
+		parent.set_bone_global_pose_override(bone_id, rel_trans, 1, true)
 	else:
 		parent.global_transform = trans
 	
