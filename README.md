@@ -19,9 +19,9 @@ Optional interpolation included at no extra charge.
 
 ### inputcontrols
 
-MouselookController and PanController can be added as children of a Spatial
-node, and will alter the parent node's transform in response to mouse/input
-events.
+MouselookController, PanController, and ZoomController can be added as children
+of a Spatial node, and will alter the parent node's transform in response to
+mouse/input events.
 
 RigidCharController and KinematicCharController can be added as children of
 nodes of the respective type, and will enable their parent to be transformed
