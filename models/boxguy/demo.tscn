@@ -34,110 +34,9 @@ target_path = NodePath("../../../HeadFulcrum/HeadTarget")
 interpolate_speed = 6.0
 exorcist = false
 
-[node name="AnimationTreePlayer" parent="Boxguy" index="2"]
-data = {
-"active": true,
-"connections": [ "holistic joiner", "out", 0, "punch", "holistic joiner", 0, "leg stance", "holistic joiner", 1, "walk direction", "walk speed", 0, "sidestep anim", "sidestep sync", 0, "walk anim", "walk direction", 0, "sidestep sync", "walk direction", 1, "arm stance", "punch", 0, "punch speed", "punch", 1, "stand anim", "leg stance", 0, "walk speed", "leg stance", 1, "jab right", "punch speed", 0, "idle", "arm stance", 0, "guarded", "arm stance", 1 ],
-"master": NodePath("../AnimationPlayer"),
-"nodes": [ {
-"filter": [  ],
-"from": "idle",
-"id": "idle",
-"position": Vector2( 185, 13 ),
-"type": "animation"
-}, {
-"id": "out",
-"position": Vector2( 1084, 96 ),
-"type": "output"
-}, {
-"id": "holistic joiner",
-"mix": 1.0,
-"position": Vector2( 924, 177 ),
-"type": "mix"
-}, {
-"filter": [  ],
-"from": "walk-loop",
-"id": "walk anim",
-"position": Vector2( 203, 475 ),
-"type": "animation"
-}, {
-"filter": [  ],
-"from": "h2h_jab_r",
-"id": "jab right",
-"position": Vector2( 181, 246 ),
-"type": "animation"
-}, {
-"filter": [  ],
-"from": "h2h_stance",
-"id": "guarded",
-"position": Vector2( 183, 125 ),
-"type": "animation"
-}, {
-"id": "walk speed",
-"position": Vector2( 654, 463 ),
-"scale": 1.0,
-"type": "timescale"
-}, {
-"id": "sidestep sync",
-"position": Vector2( 346, 586 ),
-"scale": 0.5,
-"type": "timescale"
-}, {
-"filter": [  ],
-"from": "stand",
-"id": "stand anim",
-"position": Vector2( 188, 366 ),
-"type": "animation"
-}, {
-"blend": 0.3,
-"filter": [  ],
-"id": "walk direction",
-"position": Vector2( 510, 501 ),
-"type": "blend2"
-}, {
-"autorestart": false,
-"autorestart_delay": 1.0,
-"autorestart_random_delay": 0.999981,
-"fade_in": 0.2,
-"fade_out": 0.2,
-"filter": [ NodePath("Armature/Skeleton:Shoulder.L"), NodePath("Armature/Skeleton:Elbow.L"), NodePath("Armature/Skeleton:Hand.L") ],
-"id": "punch",
-"mix": false,
-"position": Vector2( 645, 114 ),
-"type": "oneshot"
-}, {
-"id": "leg stance",
-"position": Vector2( 779, 371 ),
-"transitions": [ {
-"auto_advance": false
-}, {
-"auto_advance": false
-} ],
-"type": "transition",
-"xfade": 0.2
-}, {
-"id": "punch speed",
-"position": Vector2( 441, 210 ),
-"scale": 4.0,
-"type": "timescale"
-}, {
-"id": "arm stance",
-"position": Vector2( 437, 47 ),
-"transitions": [ {
-"auto_advance": false
-}, {
-"auto_advance": false
-} ],
-"type": "transition",
-"xfade": 0.2
-}, {
-"filter": [  ],
-"from": "sidestep-loop",
-"id": "sidestep anim",
-"position": Vector2( 177, 590 ),
-"type": "animation"
-} ]
-}
+[node name="AnimationTree" parent="Boxguy" index="2"]
+"parameters/arm stance/current" = 1
+"parameters/leg stance/current" = 1
 
 [node name="HeadFulcrum" type="Spatial" parent="Boxguy"]
 transform = Transform( 1.00003, 0, -8.74254e-08, 0, 1, 0, 8.74254e-08, 0, 1.00003, 0, 1.45, 0 )
@@ -200,7 +99,7 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.15 )
 
 [node name="ThirdPersonFulcrum" type="Spatial" parent="ViewFulcrum"]
-transform = Transform( -0.99997, -2.47176e-08, 3.20793e-07, 0, 0.997045, 0.0768238, -3.21744e-07, 0.0768215, -0.997015, 3.21469e-06, 0.769856, 0.00885118 )
+transform = Transform( -0.99997, -2.47176e-08, 3.20793e-07, 0, 0.997045, 0.0768238, -3.21744e-07, 0.0768215, -0.997009, 3.21469e-06, 0.769856, 0.00885118 )
 
 [node name="ThirdPerson" type="Spatial" parent="ViewFulcrum/ThirdPersonFulcrum"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
@@ -214,7 +113,7 @@ enabled = true
 target_path = NodePath("../../FocalPoint")
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997045, 4.1772e-06, 2.45033, -2.98228 )
+transform = Transform( -1, -2.47183e-08, 3.20803e-07, 0, 0.997045, 0.0768238, -3.21754e-07, 0.0768238, -0.997045, 4.1772e-06, 2.45033, -2.98226 )
 
 [node name="FollowEyesOrThirdPerson" type="Node" parent="Camera"]
 script = ExtResource( 4 )
