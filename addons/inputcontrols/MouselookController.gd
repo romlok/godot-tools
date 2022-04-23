@@ -86,8 +86,8 @@ func _unhandled_input(event):
 		elif mouselook_hold_timer != null and mouselook_hold_timer.time_left <= 0:
 			if mouselook:
 				set_mouselook(false)
-			get_tree().set_input_as_handled()
-			return
+		get_tree().set_input_as_handled()
+		return
 		
 	if not mouselook:
 		# Not currently on rotation
